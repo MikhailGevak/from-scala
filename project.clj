@@ -1,8 +1,8 @@
 (defproject t6/from-scala "0.1.0"
   :description "A Scala interop library for Clojure"
   :url "https://github.com/t6/from-scala"
-  :license {:name "Eclipse Public License"
-            :url "http://www.eclipse.org/legal/epl-v10.html"}
+  :license {:name "MIT License"
+            :url "http://www.opensource.org/licenses/mit-license.php"}
   :profiles {:scala2.10 {:dependencies [[org.scala-lang/scala-library "2.10.4"]]}
              :dev {:dependencies [[org.clojure/clojure "1.6.0"]
                                   [org.scala-lang/scala-library "2.11.2"]
