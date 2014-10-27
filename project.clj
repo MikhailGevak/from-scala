@@ -1,4 +1,4 @@
-(defproject t6/from-scala "0.1.0"
+(defproject t6/from-scala "0.2.0-SNAPSHOT"
   :description "A Scala interop library for Clojure"
   :url "https://github.com/t6/from-scala"
   :license {:name "MIT License"
@@ -15,7 +15,7 @@
                            :sub-title "A Scala interop library for Clojure"
                            :author "Tobias Kortkamp"
                            :email  "tobias.kortkamp@gmail.com"}}}
-  :dependencies [[cats "0.1.0"
+  :dependencies [[cats "0.2.0"
                   :exclusions [com.keminglabs/cljx
                                org.clojure/clojurescript]]
                  [potemkin "0.3.8"]]

@@ -3,7 +3,7 @@
   (:require [clojure.string :as str]
             [cats.core :refer (mlet)]
             [cats.protocols :as protocols]
-            [cats.types :refer (left right from-either)]
+            [cats.monad.either :refer (left right from-either)]
             [potemkin :refer (def-map-type)])
   (:import (scala.reflect NameTransformer$)
            (clojure.lang Reflector Indexed IFn)
@@ -553,35 +553,43 @@
     :else (throw (ex-info "Expected a Clojure or Scala function!" f))))
 
 (extend-type scala.collection.Iterable
+  protocols/Context
+  (get-context [this] this)
+  (get-value [this] this)
+
   protocols/Functor
-  (fmap [this f]
-    ($ this map
+  (fmap [this f v]
+    ($ v map
        (wrap-function f)
-       ($ scala.collection.Iterable/canBuildFrom)))
+       ($$ this companion canBuildFrom)))
 
   protocols/Applicative
-  (fapply [this av]
-    ($ this flatMap
+  (fapply [this self av]
+    ($ self flatMap
        (function [f]
-         ($ av map
-            (wrap-function f)
-            ($ scala.collection.Iterable/canBuildFrom)))
-       ($ scala.collection.Iterable/canBuildFrom)))
+                 ($ av map
+                    (wrap-function f)
+                    ($$ this companion canBuildFrom)))
+       ($$ this companion canBuildFrom)))
+
   (pure [this v]
     ($$ this companion (apply & v)))
 
   protocols/Monad
-  (bind [this f]
-    ($ this flatMap (wrap-function f)
-       ($ scala.collection.Iterable/canBuildFrom)))
+  (mreturn [this v]
+    ($$ this companion (apply & v)))
+
+  (mbind [this self f]
+    ($ self flatMap (wrap-function f)
+       ($$ this companion canBuildFrom)))
 
   protocols/MonadZero
   (mzero [this]
     ($$ this companion empty))
 
   protocols/MonadPlus
-  (mplus [this that]
-    ($ this ++ that ($ scala.collection.Iterable/canBuildFrom))))
+  (mplus [this mv mv']
+    ($ mv ++ mv' ($$ this companion canBuildFrom))))
 
 (defmacro for
   "List comprehension for Scala collections. Syntax follows
