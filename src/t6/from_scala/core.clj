@@ -77,13 +77,11 @@
   ^scala.collection.immutable.Seq
   [& args]
   ;; Used by the $ macro so we need to use normal java interop here
-  (reduce
-    (fn [^List acc x]
-      ;; ($ acc "::" x)
-      (. acc $colon$colon x))
-    ;; ($ List/empty)
-    (. List$/MODULE$ empty)
-    (reverse args)))
+  (.. scala.collection.JavaConverters$/MODULE$
+      (asScalaBufferConverter args)
+      asScala
+      ;; this will return a Scala Vector which implements immutable.Seq
+      toIndexedSeq))
 
 (defmulti emit-form :emit)
 
@@ -459,6 +457,33 @@
   {:added "0.1.0"}
   [o]
   ($ scala.Option o))
+
+(defn immutable-list
+  [& xs]
+  ($$ scala.collection.JavaConverters/asScalaBufferConverter xs
+      asScala toList))
+
+(defn immutable-set
+  [& xs]
+  ($$ scala.collection.JavaConverters/asScalaBufferConverter xs
+      asScala toSet))
+
+(defn immutable-vector
+  [& xs]
+  ($$ scala.collection.JavaConverters/asScalaBufferConverter xs
+      asScala toVector))
+
+(def -scalaPredef<:<-ev
+  (proxy [scala.Predef$$less$colon$less] []
+    (apply [x] x)))
+
+(defn immutable-map
+  [& xs]
+  ($$ scala.collection.JavaConverters/asScalaBufferConverter xs
+      asScala
+      (grouped 2)
+      (map (function [x] (tuple (.apply x 0) (.apply x 1))))
+      (toMap -scalaPredef<:<-ev)))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;; Destructuring support for Scala collections, tuples and case classes
