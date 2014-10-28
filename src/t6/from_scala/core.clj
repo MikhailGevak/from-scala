@@ -217,11 +217,17 @@
   [{:keys [expr] :as m}]
   ;; if the symbol resolves to a class, treat it as a call to apply of
   ;; the class' companion object
-  (if (class? (safe-resolve expr))
-    (left (static-call (assoc m
-                         :class (.getName ^Class (safe-resolve expr))
-                         :method 'apply)))
-    (right)))
+  (let [class (if-let [class (safe-resolve expr)]
+                ;; if expr resolved to a var, try derefing it
+                ;; this way we can define var aliases to scala classes
+                ;; this only makes sense here, which is why this is not
+                ;; in safe-resolve
+                (if (var? class) @class class))]
+    (if (class? class)
+      (left (static-call (assoc m
+                           :class (.getName ^Class class)
+                           :method 'apply)))
+      (right))))
 
 (defn instance-call
   [{:keys [args] :as m}]
