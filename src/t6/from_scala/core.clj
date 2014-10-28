@@ -77,11 +77,13 @@
   ^scala.collection.immutable.Seq
   [& args]
   ;; Used by the $ macro so we need to use normal java interop here
-  (.. scala.collection.JavaConverters$/MODULE$
-      (asScalaBufferConverter args)
-      asScala
-      ;; this will return a Scala Vector which implements immutable.Seq
-      toIndexedSeq))
+  (if (seq args)
+    (.. scala.collection.JavaConverters$/MODULE$
+        (asScalaBufferConverter args)
+        asScala
+        ;; this will return a Scala Vector which implements immutable.Seq
+        toIndexedSeq)
+    (.empty scala.collection.immutable.Vector$/MODULE$)))
 
 (defmulti emit-form :emit)
 
