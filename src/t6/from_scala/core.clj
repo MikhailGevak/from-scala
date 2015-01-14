@@ -484,7 +484,10 @@
     else))
 
 (defmacro if-let
-  "Like `clojure.core/if-let` but with special handling of scala.Option."
+  "Like `clojure.core/if-let` but with special handling of scala.Option.
+
+ ($/if-let [x ($/option 1)] (inc x) :no) => 2
+ ($/if-let [x ($/option nil)] (inc x) :no) => :no"
   {:added "0.2.0"}
   [binding then else]
   (let [[x expr] binding]
@@ -665,6 +668,39 @@
   (mplus [this mv mv']
     ($ mv ++ mv' ($$ this companion canBuildFrom))))
 
+(extend-type scala.Option
+  protocols/Context
+  (get-context [this] this)
+  (get-value [this] this)
+
+  protocols/Functor
+  (fmap [this f v]
+    ($ v map (wrap-function f)))
+
+  protocols/Applicative
+  (fapply [this self av]
+    ($ self flatMap (function [f] ($ av map (wrap-function f)))))
+
+  (pure [this v]
+    (option v))
+
+  protocols/Monad
+  (mreturn [this v]
+    (option v))
+
+  (mbind [this self f]
+    ($ self flatMap (wrap-function f)))
+
+  protocols/MonadZero
+  (mzero [this]
+    ($ scala.Option/empty))
+
+  protocols/MonadPlus
+  (mplus [this mv mv']
+    (if-let [v (view mv)]
+      (option v)
+      mv')))
+
 (defmacro for
   "List comprehension for Scala collections. Syntax follows
   `clojure.core/for`, however `for` is not lazy. Returns a collection
@@ -674,7 +710,11 @@
   This is syntactic sugar for `cats.core/mlet`.
 
   ($/for [x ($ Set & 1 2 3) :when (even? x)] x) => ($ Set & 2)
-  ($/for [x ($ List & 1), y ($ Set & 2)] [x y]) => ($ List & [1 2])"
+  ($/for [x ($ List & 1), y ($ Set & 2)] [x y]) => ($ List & [1 2])
+
+  ($/for [x ($/option 1)] x) => ($/option 1)
+  ($/for [x ($/option 1) y ($/option 2)] (+ x y)) => ($/option 3)
+  ($/for [x ($/option nil) y ($/option 2)] (+ x y)) => ($/option nil)"
   {:added "0.1.0"}
   [bindings expr]
   `(cats.core/mlet

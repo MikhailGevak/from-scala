@@ -76,7 +76,7 @@
 ^{:refer t6.from-scala.core/tuple :added "0.1.0"}
 (fact
   "Returns a Scala tuple. Uses the Scala tuple class that matches the
-  number of arguments.\n"  
+  number of arguments.\n"
   ($/tuple 1 2) => (instance-of scala.Tuple2)
   (apply $/tuple (range 20)) => (instance-of scala.Tuple20)
   (apply $/tuple (range 21)) => (instance-of scala.Tuple21)
@@ -98,7 +98,11 @@
 
   This is syntactic sugar for `cats.core/mlet`.\n"
   ($/for [x ($ Set & 1 2 3) :when (even? x)] x) => ($ Set & 2)
-  ($/for [x ($ List & 1), y ($ Set & 2)] [x y]) => ($ List & [1 2]))
+  ($/for [x ($ List & 1), y ($ Set & 2)] [x y]) => ($ List & [1 2])
+
+  ($/for [x ($/option 1)] x) => ($/option 1)
+  ($/for [x ($/option 1) y ($/option 2)] (+ x y)) => ($/option 3)
+  ($/for [x ($/option nil) y ($/option 2)] (+ x y)) => ($/option nil))
 
 [[:chapter {:title "Destructuring support for Scala collections, tuples and case classes."}]]
 
@@ -138,3 +142,9 @@
 
 ^{:refer t6.from-scala.core/safe-resolve :added "0.1.0"}
 (fact "safe-resolve")
+
+^{:refer t6.from-scala.core/if-let :added "0.2.0"}
+(fact
+ "Like `clojure.core/if-let` but with special handling of scala.Option.\n"
+ ($/if-let [x ($/option 1)] (inc x) :no) => 2
+ ($/if-let [x ($/option nil)] (inc x) :no) => :no)
