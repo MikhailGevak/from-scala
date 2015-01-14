@@ -1,4 +1,4 @@
-(defproject t6/from-scala "0.2.0"
+(defproject t6/from-scala "0.2.1-SNAPSHOT"
   :description "A Scala interop library for Clojure"
   :url "https://github.com/t6/from-scala"
   :license {:name "MIT License"
