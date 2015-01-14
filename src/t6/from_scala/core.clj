@@ -539,10 +539,11 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;; Destructuring support for Scala collections, tuples and case classes
 
-(defprotocol IView
-  (view [object]
-    "Returns a map-like or indexed structure that wraps the given Scala
-    object. The object can then participate in destructuring."))
+(defmulti view
+  "Returns a map-like or indexed structure that wraps the given Scala
+  object. The object can then participate in destructuring."
+  {:added "0.1.0"}
+  class)
 
 (def-map-type
   ProductView
@@ -589,34 +590,37 @@
   #_(dissoc [this k] (MapView. ($ m - k)))
   (keys [this] (view ($ m keys))))
 
-(extend-protocol IView
-  scala.Product
-  (view [this] (->ProductView this))
+(defmethod view Option
+  [this]
+  (if-not (.isEmpty this)
+    (view (.get this))))
 
-  scala.Option
-  (view [this]
-    (view
-     (if-not (.isEmpty this)
-       (view (.get this)))))
+(defmethod view scala.collection.Map
+  [this]
+  (MapView. this))
 
-  scala.collection.Map
-  (view [this]
-    (MapView. this))
+(defmethod view Product
+  [this]
+  (->ProductView this))
 
-  scala.collection.Iterable
-  (view [this]
-    ;; Do a `(map view ...)` on the result here? No, because we would need
-    ;; to do the same for e.g. all members of scala.Products and for any
-    ;; collection that participates in IView, and this is probably a bad idea
-    (iterator-seq
-     (JavaConversions/asJavaIterator
-      (.iterator this))))
+(defmethod view scala.collection.Iterable
+  [this]
+  ;; Do a `(map view ...)` on the result here? No, because we would need
+  ;; to do the same for e.g. all members of scala.Products and for any
+  ;; collection that participates in view, and this is probably a bad idea
+  (iterator-seq
+   (JavaConversions/asJavaIterator
+    (.iterator this))))
 
-  Object
-  (view [this] this)
+(prefer-method view scala.collection.Iterable scala.Product)
 
-  nil
-  (view [this] nil))
+(defmethod view :default
+  [this]
+  this)
+
+(defmethod view nil
+  [_]
+  nil)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;; Monad, Functor and Applicative implementations for Scala collections
