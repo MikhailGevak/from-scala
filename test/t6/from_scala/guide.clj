@@ -20,8 +20,8 @@
 "To use `from-scala` in your project, include this in your `project.clj`:"
 (comment
   {:dependencies [...
-                  [t6/from-scala "0.1.0"]
-                  [org.scala-lang/scala-library "2.11.2"]
+                  [t6/from-scala "0.2.0"]
+                  [org.scala-lang/scala-library "2.11.5"]
                   ...]})
 
 "You need to include a Scala library yourself. `from-scala` works
@@ -53,5 +53,3 @@ Distributed under the terms of the MIT License.
 "
 
 [[:file {:src "test/t6/from_scala/core_test.clj"}]]
-
-
