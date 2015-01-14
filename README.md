@@ -16,8 +16,8 @@
 To use `from-scala` in your project, include this in your `project.clj`:
 ```clojure
 {:dependencies [...
-                [t6/from-scala "0.1.0"]
-                [org.scala-lang/scala-library "2.11.2"]
+                [t6/from-scala "0.2.0"]
+                [org.scala-lang/scala-library "2.11.5"]
                 ...]}
 ```
 
@@ -46,7 +46,7 @@ An example of using Scala's collection API with `from-scala`:
 ;; => 10
 ```
 
-## License 
+## License
 
 Copyright © 2014 Tobias Kortkamp
 
