@@ -3,6 +3,7 @@
   :url "https://github.com/t6/from-scala"
   :license {:name "MIT License"
             :url "http://www.opensource.org/licenses/mit-license.php"}
+  :deploy-repositories [["releases" :clojars]]
   :profiles {:scala2.10 {:dependencies [[org.scala-lang/scala-library "2.10.4"]]}
              :dev {:dependencies [[org.clojure/clojure "1.6.0"]
                                   [org.scala-lang/scala-library "2.11.5"]
