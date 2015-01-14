@@ -1,6 +1,7 @@
 (ns t6.from-scala.core
-  (:refer-clojure :exclude [partial for])
-  (:require [clojure.string :as str]
+  (:refer-clojure :exclude [partial for if-let])
+  (:require [clojure.core :as c]
+            [clojure.string :as str]
             [cats.core :refer (mlet)]
             [cats.protocols :as protocols]
             [cats.monad.either :refer (left right from-either)]
@@ -9,7 +10,7 @@
            (clojure.lang Reflector Indexed IFn)
            (scala.collection.immutable List List$ Seq)
            (scala.collection JavaConversions)
-           (scala Product)))
+           (scala Product Option)))
 
 (def debug
   "Set to `true` to enable debug messages when invoking $."
@@ -152,9 +153,9 @@
 
 (defn constructor-call-emit
   [expr m]
-  (if-let [c (safe-resolve (encode-scala-symbol expr))]
+  (c/if-let [c (safe-resolve (encode-scala-symbol expr))]
     (left (assoc m :emit :new-special-form
-                   :expr (symbol (.getName c))))
+                 :expr (symbol (.getName c))))
     (right)))
 
 (defn symbol-constructor-call
@@ -178,7 +179,7 @@
   [{class-name :class, method-name :method :as m}]
   (merge m
          {:emit :dot-special-form}
-         (if-let [class (safe-resolve class-name)]
+         (c/if-let [class (safe-resolve class-name)]
            (if (class? class)
              (let [fqn-class (symbol (.getName ^Class class))
                    method (encode-scala-symbol method-name)
@@ -219,7 +220,7 @@
   [{:keys [expr] :as m}]
   ;; if the symbol resolves to a class, treat it as a call to apply of
   ;; the class' companion object
-  (let [class (if-let [class (safe-resolve expr)]
+  (let [class (c/if-let [class (safe-resolve expr)]
                 ;; if expr resolved to a var, try derefing it
                 ;; this way we can define var aliases to scala classes
                 ;; this only makes sense here, which is why this is not
@@ -388,10 +389,10 @@
              (throw
               (ex-info "Function with 0 arguments can't take any more arguments"
                        {:f acc :x x}))
-             
+
              (instance? scala.Function1 acc)
              (function [] (.apply acc x))
-             
+
              :else
              (.apply (.curried acc) x)))
           f
@@ -403,7 +404,7 @@
 (defn tuple
   "Returns a Scala tuple. Uses the Scala tuple class that matches the
   number of arguments.
-  
+
   ($/tuple 1 2) => (instance-of scala.Tuple2)
   (apply $/tuple (range 20)) => (instance-of scala.Tuple20)
   (apply $/tuple (range 21)) => (instance-of scala.Tuple21)
@@ -464,28 +465,67 @@
   ($/option :a) => (instance-of scala.Some)"
   {:added "0.1.0"}
   [o]
-  ($ scala.Option o))
+  ($ Option o))
+
+(defprotocol OptionGetOrElse
+  (-option-get [this else]))
+
+(extend-protocol OptionGetOrElse
+  scala.Option
+  (-option-get [this else]
+    (.getOrElse ^scala.Option this (function [] else)))
+
+  Object
+  (-option-get [this else]
+    this)
+
+  nil
+  (-option-get [this else]
+    else))
+
+(defmacro if-let
+  "Like `clojure.core/if-let` but with special handling of scala.Option."
+  {:added "0.2.0"}
+  [binding then else]
+  (let [[x expr] binding]
+    `(let [v# ~expr]
+       (c/if-let [~x (-option-get v# nil)]
+         ~then
+         ~else))))
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;; Constructing Scala data structures
 
 (defn immutable-list
+  {:added "0.2.0"}
   [& xs]
-  ($$ scala.collection.JavaConverters/asScalaBufferConverter xs
-      asScala toList))
+  (c/if-let [xs (seq xs)]
+    ($$ scala.collection.JavaConverters/asScalaBufferConverter xs
+        asScala toList)
+    ($ scala.collection.immutable.List/empty)))
 
 (defn immutable-set
+  {:added "0.2.0"}
   [& xs]
-  ($$ scala.collection.JavaConverters/asScalaBufferConverter xs
-      asScala toSet))
+  (c/if-let [xs (seq xs)]
+    ($$ scala.collection.JavaConverters/asScalaBufferConverter xs
+        asScala toSet)
+    ($ scala.collection.immutable.Set/empty)))
 
 (defn immutable-vector
+  {:added "0.2.0"}
   [& xs]
-  ($$ scala.collection.JavaConverters/asScalaBufferConverter xs
-      asScala toVector))
+  (c/if-let [xs (seq xs)]
+    ($$ scala.collection.JavaConverters/asScalaBufferConverter xs
+        asScala toVector)
+    ($ scala.collection.immutable.Vector/empty)))
 
 (def -scalaPredef<:<-ev
   (proxy [scala.Predef$$less$colon$less] []
     (apply [x] x)))
 
 (defn immutable-map
+  {:added "0.2.0"}
   [& xs]
   ($$ scala.collection.JavaConverters/asScalaBufferConverter xs
       asScala
@@ -579,6 +619,7 @@
 ;;; Monad, Functor and Applicative implementations for Scala collections
 
 (defn wrap-function
+  {:added "0.1.0"}
   [f]
   (cond
     (instance? scala.Function1 f) f
@@ -639,4 +680,3 @@
   `(cats.core/mlet
      ~bindings
      (cats.core/return ~expr)))
-
