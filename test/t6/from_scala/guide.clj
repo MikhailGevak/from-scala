@@ -35,6 +35,8 @@ the example above."
     ...
     (:require [t6.from-scala.core :refer ($ $$) :as $]
               ...)
+    (:import scala.collection.immutable.List
+             scala.collection.immutable.Set)
     ...))
 
 [[:section {:title "Example"}]]
