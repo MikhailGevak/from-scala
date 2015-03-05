@@ -45,7 +45,7 @@ the example above."
 (fact
   ($ ($ List & 1 2 3 4)
      reduce
-     ($/function [x y] (+ x y)))) => 10
+     ($/fn [x y] (+ x y)))) => 10
 
 [[:section {:title "License"}]]
 
