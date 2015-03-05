@@ -34,7 +34,8 @@ All examples assume that you imported `from-scala` like this:
   ...))
 ```
 
-More documentation is available here: https://t6.github.io/from-scala/
+* [Documentation for the latest release](https://t6.github.io/from-scala/0.2.0/)
+* [Documentation for the current snapshot](https://t6.github.io/from-scala/)
 
 ## Example
 

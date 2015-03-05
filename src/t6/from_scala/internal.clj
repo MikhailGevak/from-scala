@@ -23,9 +23,9 @@
   "Transforms a Java identifier to a Scala identifier. Accepts
   strings, symbols or keywords. Returns a string.
 
-  ($/decode-scala-symbol \"foo.$plus$plus.bar.$colon$colon\") => \"foo.++.bar.::\"
-  ($/decode-scala-symbol \"$plus$plus\") => \"++\"
-  ($/decode-scala-symbol '$lessinit$greater) => \"<init>\""
+ ($/decode-scala-symbol \"foo.$plus$plus.bar.$colon$colon\") => \"foo.++.bar.::\"
+ ($/decode-scala-symbol \"$plus$plus\") => \"++\"
+ ($/decode-scala-symbol '$lessinit$greater) => \"<init>\""
   {:added "0.1.0"}
   [s]
   ;; split will also remove any potential duplicate or suffix dots in s
@@ -39,11 +39,11 @@
   Java identifier. Accepts strings, symbols or keywords.  Returns a
   Clojure symbol.
 
-  ($/encode-scala-symbol \"foo.++.bar.::\") => 'foo.$plus$plus.bar.$colon$colon
-  ($/encode-scala-symbol \"++\") => '$plus$plus
-  ($/encode-scala-symbol '<init>) => '$lessinit$greater
-  ;; trailing dots are removed
-  ($/encode-scala-symbol \"::.\") => '$colon$colon"
+ ($/encode-scala-symbol \"foo.++.bar.::\") => 'foo.$plus$plus.bar.$colon$colon
+ ($/encode-scala-symbol \"++\") => '$plus$plus
+ ($/encode-scala-symbol '<init>) => '$lessinit$greater
+ ;; trailing dots are removed
+ ($/encode-scala-symbol \"::.\") => '$colon$colon"
   {:added "0.1.0"}
   [s]
   (let [packages (str/split (name s) #"\." )]
@@ -56,8 +56,6 @@
 ;;; Resolve and invoke Scala classes and methods
 
 (defn safe-resolve
-  "safe-resolve"
-  {:added "0.1.0"}
   [sym]
   (try
     (resolve (encode-scala-symbol sym))
@@ -325,9 +323,9 @@
 
   ($$ x) =expands-to=> (clojure.core/-> x)
   ($$ x a b c) =expands-to=> (clojure.core/-> x
-                                              (t6.from-scala.core/$ a)
-                                              (t6.from-scala.core/$ b)
-                                              (t6.from-scala.core/$ c))"
+                                              (t6.from-scala.internal/$ a)
+                                              (t6.from-scala.internal/$ b)
+                                              (t6.from-scala.internal/$ c))"
   {:added "0.1.0"}
   [x & forms]
   `(-> ~x

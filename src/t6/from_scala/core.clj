@@ -8,6 +8,8 @@
              t6.from-scala.internal/$$
              t6.from-scala.internal/fn
              t6.from-scala.internal/var-args
+             t6.from-scala.internal/decode-scala-symbol
+             t6.from-scala.internal/encode-scala-symbol
 
              t6.from-scala.types/for
              t6.from-scala.types/if-let

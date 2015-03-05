@@ -20,7 +20,7 @@
 "To use `from-scala` in your project, include this in your `project.clj`:"
 (comment
   {:dependencies [...
-                  [t6/from-scala "0.2.0"]
+                  [t6/from-scala "0.2.1-SNAPSHOT"]
                   [org.scala-lang/scala-library "2.11.5"]
                   ...]})
 
@@ -54,4 +54,5 @@ the example above."
 Distributed under the terms of the MIT License.
 "
 
-[[:file {:src "test/t6/from_scala/core_test.clj"}]]
+[[:file {:src "test/t6/from_scala/internal_test.clj"}]]
+[[:file {:src "test/t6/from_scala/types_test.clj"}]]
