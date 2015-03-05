@@ -49,6 +49,6 @@ An example of using Scala's collection API with `from-scala`:
 
 ## License
 
-Copyright © 2014 Tobias Kortkamp
+Copyright © 2014-2015 Tobias Kortkamp
 
 Distributed under the terms of the MIT License.
