@@ -1,4 +1,4 @@
-(ns t6.from-scala.types
+(ns t6.from-scala.utils
   (:refer-clojure :exclude [if-let for partial])
   (:require [clojure.core :as c]
             [cats.core :refer (mlet)]

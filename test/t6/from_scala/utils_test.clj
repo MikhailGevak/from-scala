@@ -1,4 +1,4 @@
-(ns t6.from-scala.types-test
+(ns t6.from-scala.utils-test
   (:refer-clojure :exclude [for partial])
   (:use midje.sweet)
   (:require [t6.from-scala.core :refer ($ $$) :as $])

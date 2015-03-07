@@ -55,4 +55,4 @@ Distributed under the terms of the MIT License.
 "
 
 [[:file {:src "test/t6/from_scala/internal_test.clj"}]]
-[[:file {:src "test/t6/from_scala/types_test.clj"}]]
+[[:file {:src "test/t6/from_scala/utils_test.clj"}]]
