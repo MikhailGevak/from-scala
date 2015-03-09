@@ -20,8 +20,7 @@
              t6.from-scala.utils/option
              t6.from-scala.utils/partial
              t6.from-scala.utils/tuple
-             t6.from-scala.utils/view
-             t6.from-scala.utils/wrap-fn)
+             t6.from-scala.utils/view)
 
 (import-macro t6.from-scala.internal/fn function)
 (import-fn t6.from-scala.utils/wrap-fn wrap-function)
