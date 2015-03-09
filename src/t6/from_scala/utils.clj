@@ -368,3 +368,11 @@
   `(cats.core/mlet
     ~bindings
     (cats.core/return ~expr)))
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;; Scala futures
+
+(defn execution-context
+  "Returns Scala's global execution context."
+  []
+  ($ scala.concurrent.ExecutionContext$Implicits/global))

@@ -173,6 +173,27 @@
     (constructor-call-emit expr m)
     (right)))
 
+(defn has-field?
+  [class field]
+  (if class
+    (try
+      (.getField class (str field))
+      true
+      (catch NoSuchFieldException e
+        false))
+    false))
+
+(defn get-companion
+  "Returns a class' companion class or nil if there is no such class."
+  [class]
+  (let [fqn-class (safe-resolve (.getName ^Class class))]
+    (if (has-field? fqn-class "MODULE$")
+      fqn-class
+      (let [companion (-> (str fqn-class "$") safe-resolve)]
+        (if (has-field? companion "MODULE$")
+          companion
+          nil)))))
+
 (defn static-call
   [{class-name :class, method-name :method :as m}]
   (merge m
@@ -181,17 +202,21 @@
            (if (class? class)
              (let [fqn-class (symbol (.getName ^Class class))
                    method (encode-scala-symbol method-name)
-                   companion (-> (str fqn-class "$") safe-resolve)]
-               (if (and companion (class? companion))
-                 {:expr (symbol (.getName ^Class companion)
-                                "MODULE$")
+                   companion (get-companion class)]
+               (if companion
+                 {:expr (symbol (.getName ^Class companion) "MODULE$")
                   :method method}
                  {:expr  fqn-class
                   :method method}))
-             (throw (ex-info "Not a class" class-name)))
-           (throw (ex-info "Cannot find class with that name in this namespace!"
-                           {:namespace *ns*
-                            :name class-name})))))
+             (throw (ex-info "Not a class" {:name class-name})))
+           ;; Maybe the class we look for is compiled as a Scala object only.
+           ;; So append $ and look for a Scala object
+           (c/if-let [class (safe-resolve (str class-name "$"))]
+             {:expr (symbol (.getName ^Class class) "MODULE$")
+              :method (encode-scala-symbol method-name)}
+             (throw (ex-info "Cannot find a class with that name in this namespace or on the classpath!"
+                             {:namespace *ns*
+                              :name class-name}))))))
 
 (defn static-call-vector
   [{:keys [expr] :as m}]
