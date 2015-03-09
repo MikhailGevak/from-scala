@@ -10,13 +10,18 @@
 
 [[:chapter {:title "Utility functions"}]]
 
-^{:refer t6.from-scala.types/partial :added "0.1.0"}
+^{:refer t6.from-scala.utils/partial :added "0.1.0"}
 (fact
-  "Like `clojure.core/partial` but for Scala functions.\n")
+ "Like `clojure.core/partial` but for Scala functions.\n"
+ (def plus ($/fn [a b] (+ a b)))
+ ($ plus apply 4 5) => 9
+
+ (def plus5 ($/partial plus 5))
+ ($ plus5 apply 3) => 8)
 
 [[:chapter {:title "Working with Scala tuples, options and collections"}]]
 
-^{:refer t6.from-scala.types/tuple :added "0.1.0"}
+^{:refer t6.from-scala.utils/tuple :added "0.1.0"}
 (fact
   "Returns a Scala tuple. Uses the Scala tuple class that matches the
   number of arguments.\n"
@@ -26,13 +31,13 @@
   (apply $/tuple (range 22)) => (instance-of scala.Tuple22)
   (apply $/tuple (range 23)) => (throws ExceptionInfo))
 
-^{:refer t6.from-scala.types/option :added "0.1.0"}
+^{:refer t6.from-scala.utils/option :added "0.1.0"}
 (fact
   "Returns a Scala option.\n"
   ($/option nil) => (instance-of scala.None$)
   ($/option :a) => (instance-of scala.Some))
 
-^{:refer t6.from-scala.types/for :added "0.1.0"}
+^{:refer t6.from-scala.utils/for :added "0.1.0"}
 (fact
   "List comprehension for Scala collections. Syntax follows
   `clojure.core/for`, however `for` is not lazy. Returns a collection
@@ -49,7 +54,7 @@
 
 [[:chapter {:title "Destructuring support for Scala collections, tuples and case classes."}]]
 
-^{:refer t6.from-scala.types/view :added "0.1.0"}
+^{:refer t6.from-scala.utils/view :added "0.1.0"}
 (fact
   "Returns a map-like or indexed structure that wraps the given Scala
   object. The object can then participate in destructuring.\n"
@@ -62,8 +67,13 @@
   (let [[x y] ($/view ($/tuple 1 2))]
     [x y]) => [1 2])
 
-^{:refer t6.from-scala.types/if-let :added "0.2.0"}
+^{:refer t6.from-scala.utils/if-let :added "0.2.0"}
 (fact
  "Like `clojure.core/if-let` but with special handling of scala.Option.\n"
  ($/if-let [x ($/option 1)] (inc x) :no) => 2
  ($/if-let [x ($/option nil)] (inc x) :no) => :no)
+
+^{:refer t6.from-scala.utils/execution-context :added "0.2.1"}
+(fact
+ "Returns Scala's global execution context.\n"
+ ($/execution-context) => (instance-of scala.concurrent.ExecutionContext))

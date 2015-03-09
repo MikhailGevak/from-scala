@@ -15,7 +15,13 @@
 ;;; Working with Scala functions
 
 (defn partial
-  "Like `clojure.core/partial` but for Scala functions."
+  "Like `clojure.core/partial` but for Scala functions.
+
+ (def plus ($/fn [a b] (+ a b)))
+ ($ plus apply 4 5) => 9
+
+ (def plus5 ($/partial plus 5))
+ ($ plus5 apply 3) => 8"
   {:added "0.1.0"}
   [f & args]
   (reduce (c/fn [acc x]
@@ -373,6 +379,9 @@
 ;;; Scala futures
 
 (defn execution-context
-  "Returns Scala's global execution context."
+  "Returns Scala's global execution context.
+
+ ($/execution-context) => (instance-of scala.concurrent.ExecutionContext)"
+  {:added "0.2.1"}
   []
   ($ scala.concurrent.ExecutionContext$Implicits/global))

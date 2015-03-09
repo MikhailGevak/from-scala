@@ -152,12 +152,11 @@ examples."
 
 "Call `flatMap` on the list, incrementing every number"
 ($ l flatMap
-   ($/fn [x] (inc x))
+   ($/fn [xs]
+     ($ xs map ($/fn [x] (inc x))
+        ($ List/canBuildFrom)))
    ($ List/canBuildFrom))
 ;; => List(2, 3, 4, 5, 6, 7)
-
-"Note that here a mix of `$` and regular Java interop may look nicer:"
-(.flatMap l (function [x] (inc x)) ($ List/canBuildFrom))
 
 "`flatMap` takes an implicit parameter.  It expects a `CanBuildFrom`
 instance.  You can create one for all Scala collection using
@@ -240,10 +239,10 @@ of elements in the tuple with `1 <= N <= 22`."
 function."
 
 (def plus ($/fn [a b] (+ a b)))
-(plus 4 5) ;; => 9
+($ plus apply 4 5) ;; => 9
 
-(def plus5 ($/partial f 5))
-(plus5 4) ;; => 9
+(def plus5 ($/partial plus 5))
+($ plus5 apply 3) ;; => 8
 
 [[:subsection {:title "Creating a `scala.Option`"}]]
 
@@ -262,7 +261,7 @@ nicer and works well with Clojure's
 `when-let` like you normally would in Clojure:"
 
 (def my-option ($/option :value))
-(if-let [v ($/view option)]
+(if-let [v ($/view my-option)]
   (str "option has Some(" v ")")
   "option was None$")
 ;; => "option has Some(:value)"

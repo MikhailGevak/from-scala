@@ -6,11 +6,7 @@
             [cats.protocols :as protocols]
             [cats.monad.either :refer (left right from-either)])
   (:import (scala.reflect NameTransformer$)
-           (clojure.lang Reflector)
-           ;;(scala.collection.immutable List List$ Seq)
-           ;;(scala.collection JavaConversions)
-           #_(scala Product Option)))
-
+           (clojure.lang Reflector)))
 
 (def debug
   "Set to `true` to enable debug messages when invoking $."
@@ -85,6 +81,10 @@
     (.empty scala.collection.immutable.Vector$/MODULE$)))
 
 (defmulti emit-form :emit)
+
+(defmethod emit-form :dot-special-form-static
+  [{:keys [expr method args symbol]}]
+  `(Reflector/invokeStaticMethod ~expr ~(str method) (into-array [~@args])))
 
 (defmethod emit-form :dot-special-form
   [{:keys [expr method args symbol]}]
@@ -184,12 +184,11 @@
     false))
 
 (defn get-companion
-  "Returns a class' companion class or nil if there is no such class."
   [class]
   (let [fqn-class (safe-resolve (.getName ^Class class))]
     (if (has-field? fqn-class "MODULE$")
       fqn-class
-      (let [companion (-> (str fqn-class "$") safe-resolve)]
+      (let [companion (-> (str (.getName ^Class fqn-class) "$") safe-resolve)]
         (if (has-field? companion "MODULE$")
           companion
           nil)))))
@@ -206,7 +205,8 @@
                (if companion
                  {:expr (symbol (.getName ^Class companion) "MODULE$")
                   :method method}
-                 {:expr  fqn-class
+                 {:emit :dot-special-form-static
+                  :expr  fqn-class
                   :method method}))
              (throw (ex-info "Not a class" {:name class-name})))
            ;; Maybe the class we look for is compiled as a Scala object only.
