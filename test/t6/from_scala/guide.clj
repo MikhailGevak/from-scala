@@ -54,7 +54,7 @@ declaration:"
 
 (comment
   (ns your.ns
-    (:require [from-scala.core :refer [$ $$] :as $])))
+    (:require [t6.from-scala.core :refer [$ $$] :as $])))
 
 [[:subsection {:title "Creating an empty immutable Scala list"}]]
 
@@ -65,7 +65,7 @@ We do not need to import the companion object explicitly here!"
 (import 'scala.collection.immutable.List)
 
 "Call the companion object's empty method"
-($ List/empty) ;; => #<Nil>
+($ List/empty) ;; => #<Nil$ List()>
 
 "#### Without `from-scala`"
 
@@ -73,7 +73,7 @@ We do not need to import the companion object explicitly here!"
 (import 'scala.collection.immutable.List$)
 
 "Call the method empty on the companion object"
-(.empty List$/MODULE$) ;; => #<Nil>
+(.empty List$/MODULE$) ;; => #<Nil$ List()>
 
 [[:subsection {:title "Appending a new element to an empty list"}]]
 
@@ -83,7 +83,7 @@ We do not need to import the companion object explicitly here!"
 "#### With `from-scala`"
 
 "Cons a 1 to it"
-($ l "::" 1) ;; => #<$colon$colon List(1, Nil)>
+($ l "::" 1) ;; => #<$colon$colon List(1)>
 
 "Here we called the method `::` on the List instance, which is actually
 called `$colon$colon` in Java. We have to use a string here because
@@ -102,7 +102,7 @@ the symbol `$colon$colon` if you prefer."
 "Consing more than one element can be done with the help of the `$$`
 macro:"
 
-($$ l ("::" 1) ("::" 1))
+($$ l ("::" 1) ("::" 2))
 
 "which expands to:"
 (-> l ($ "::" 1) ($ "::" 2))
@@ -248,9 +248,9 @@ function."
 
 (import 'scala.Option)
 
-($ Option :value) ;; => #<Some :value>
+($ Option :value) ;; => Some(:value)
 
-($ Option nil) ;; => #<None$>
+($ Option nil) ;; => None
 
 "Prefer using `Option` rather than using `Some` directly. It looks
 nicer and works well with Clojure's
@@ -269,10 +269,10 @@ nicer and works well with Clojure's
 "Alternatively use the option's `getOrElse` method, however you need to
 wrap the default value for `getOrElse` in a Scala function."
 
-($ my-option getOrElse ($/fn [] :default-value))
+($ my-option getOrElse ($/fn [] :default-value)) ;; => :value
 
 "Or use `$/if-let` which implicitly calls `$/view` on the value:"
-(if-let [v my-option]
+($/if-let [v my-option]
   (str "option has Some(" v ")")
   "option was None$")
 ;; => "option has Some(:value)"
