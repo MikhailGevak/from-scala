@@ -38,7 +38,7 @@ make calling Scala methods easier and less ugly."
 "To use `from-scala` in your project, include this in your `project.clj`:"
 (comment
   {:dependencies [...
-                  [t6/from-scala "0.2.1"]
+                  [t6/from-scala "0.3.0-SNAPSHOT"]
                   [org.scala-lang/scala-library "2.11.6"]
                   ...]})
 
