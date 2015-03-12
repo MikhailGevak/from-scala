@@ -16,8 +16,8 @@
 To use `from-scala` in your project, include this in your `project.clj`:
 ```clojure
 {:dependencies [...
-                [t6/from-scala "0.2.0"]
-                [org.scala-lang/scala-library "2.11.5"]
+                [t6/from-scala "0.2.1"]
+                [org.scala-lang/scala-library "2.11.6"]
                 ...]}
 ```
 
@@ -34,7 +34,8 @@ All examples assume that you imported `from-scala` like this:
   ...))
 ```
 
-* [Documentation for the latest release](https://t6.github.io/from-scala/0.2.0/)
+* [Documentation for the latest release](https://t6.github.io/from-scala/0.2.1/)
+* [Documentation for version 0.2.0](https://t6.github.io/from-scala/0.2.0/)
 * [Documentation for the current snapshot](https://t6.github.io/from-scala/)
 
 ## Example

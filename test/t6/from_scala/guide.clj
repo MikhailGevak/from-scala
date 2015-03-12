@@ -38,8 +38,8 @@ make calling Scala methods easier and less ugly."
 "To use `from-scala` in your project, include this in your `project.clj`:"
 (comment
   {:dependencies [...
-                  [t6/from-scala "0.2.1-SNAPSHOT"]
-                  [org.scala-lang/scala-library "2.11.5"]
+                  [t6/from-scala "0.2.1"]
+                  [org.scala-lang/scala-library "2.11.6"]
                   ...]})
 
 "You need to include a Scala library yourself.  `from-scala` works
