@@ -1,0 +1,578 @@
+<html><head><meta content="chrome=1" http-equiv="X-UA-Compatible" /><meta charset="utf-8" /><meta content="width=device-width, initial-scale=1, user-scalable=no" name="viewport" /><title>from-scala</title><style>body {
+  padding:50px;
+  font:14px/1.5 Helvetica, Arial, sans-serif;
+  color:#777;
+  font-weight:300;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  color:#222;
+  margin:0 0 20px;
+}
+
+p, ul, ol, table, pre, dl {
+  margin:0 0 20px;
+}
+
+h1, h2, h3 {
+  line-height:1.1;
+}
+
+h1 {
+  font-size:28px;
+}
+
+h2 {
+  color:#393939;
+}
+
+h4, h5, h6 {
+  color:#494949;
+  margin:0;
+}
+
+header h4{
+  margin: 10 0 0 0px;
+}
+
+a {
+  color:#39c;
+  font-weight:400;
+  text-decoration:none;
+}
+
+a small {
+  font-size:11px;
+  color:#777;
+  margin-top:-0.6em;
+  display:block;
+}
+
+.wrapper {
+  width:860px;
+  margin:0 auto;
+}
+
+.figure div.img {
+  text-align: center;
+  border-radius: 5px;
+  border: 1px solid #ddd;
+  padding: 10px;
+}
+
+blockquote {
+  border-left:1px solid #e5e5e5;
+  margin:0;
+  padding:0 0 0 20px;
+  font-style:italic;
+}
+
+code, pre {
+  font-family:Monaco, Bitstream Vera Sans Mono, Lucida Console, Terminal;
+  color:#333;
+  font-size:12px;
+}
+
+pre {
+  padding:8px 15px;
+  background: #f8f8f8;  
+  border-radius:5px;
+  border:1px solid #e5e5e5;
+  overflow-x: auto;
+}
+
+table {
+  width:100%;
+  border-collapse:collapse;
+}
+
+th, td {
+  text-align:left;
+  padding:5px 10px;
+  border-bottom:1px solid #e5e5e5;
+}
+
+dt {
+  color:#444;
+  font-weight:700;
+}
+
+th {
+  color:#444;
+}
+
+img {
+  max-width:100%;
+}
+
+header {
+  width:270px;
+  float:left;
+  /*position:fixed;*/
+}
+
+header ul {
+  list-style:none;
+  height:40px;
+  
+  padding:0;
+  
+  background: #eee;
+  background: -moz-linear-gradient(top, #f8f8f8 0%, #dddddd 100%);
+  background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#f8f8f8), color-stop(100%,#dddddd));
+  background: -webkit-linear-gradient(top, #f8f8f8 0%,#dddddd 100%);
+  background: -o-linear-gradient(top, #f8f8f8 0%,#dddddd 100%);
+  background: -ms-linear-gradient(top, #f8f8f8 0%,#dddddd 100%);
+  background: linear-gradient(top, #f8f8f8 0%,#dddddd 100%);
+  
+  border-radius:5px;
+  border:1px solid #d2d2d2;
+  box-shadow:inset #fff 0 1px 0, inset rgba(0,0,0,0.03) 0 -1px 0;
+  width:270px;
+}
+
+header li {
+  width:89px;
+  float:left;
+  border-right:1px solid #d2d2d2;
+  height:40px;
+}
+
+header ul a {
+  line-height:1;
+  font-size:11px;
+  color:#999;
+  display:block;
+  text-align:center;
+  padding-top:6px;
+  height:40px;
+}
+
+strong {
+  font-weight:700;
+}
+
+header ul li + li {
+  width:88px;
+  border-left:1px solid #fff;
+}
+
+header ul li + li + li {
+  border-right:none;
+  width:89px;
+}
+
+header ul a strong {
+  font-size:14px;
+  display:block;
+  color:#222;
+}
+
+section {
+  width: 60%;
+  float:right;
+  padding-bottom:50px;
+  padding-right: 10%;
+}
+
+small {
+  font-size:11px;
+}
+
+hr {
+  border:0;
+  background:#e5e5e5;
+  height:1px;
+  margin:0 0 20px;
+}
+
+footer {
+  width:270px;
+  float:left;
+  position:fixed;
+  bottom:50px;
+}
+
+header div.heading {
+  display:none;
+}
+
+
+@media print, screen and (max-width: 960px) {
+  
+  div.wrapper {
+    width:auto;
+    margin:0;
+  }
+  
+  header, section, footer {
+    float:none;
+    position:static;
+    width:auto;
+  }
+  
+  header div.heading {
+    display:block;
+  }
+    
+  section div.heading {
+    display:none;
+  }
+  
+  section {
+    border:1px solid #e5e5e5;
+    border-width:1px 0;
+    padding:20px 0;
+    margin:0 0 20px;
+  }
+  
+  header a small {
+    display:inline;
+  }
+  
+  header ul {
+    position:absolute;
+    right:50px;
+    top:52px;
+  }
+}
+
+@media print, screen and (max-width: 720px) {
+  body {
+    word-wrap:break-word;
+  }
+  
+  header {
+    padding:0;
+  }
+  
+  header ul, header p.view {
+    position:static;
+  }
+  
+  pre, code {
+    word-wrap:normal;
+  }
+}
+
+@media print, screen and (max-width: 480px) {
+  body {
+    padding:15px;
+  }
+  
+  header ul {
+    display:none;
+  }
+}
+
+@media print {
+  body {
+    padding:0.4in;
+    font-size:12pt;
+    color:#444;
+  }
+}
+
+
+.highlight  { background: #ffffff; }
+.highlight .c { color: #999988; font-style: italic } /* Comment */
+.highlight .err { color: #a61717; background-color: #e3d2d2 } /* Error */
+.highlight .k { font-weight: bold } /* Keyword */
+.highlight .o { font-weight: bold } /* Operator */
+.highlight .cm { color: #999988; font-style: italic } /* Comment.Multiline */
+.highlight .cp { color: #999999; font-weight: bold } /* Comment.Preproc */
+.highlight .c1 { color: #999988; font-style: italic } /* Comment.Single */
+.highlight .cs { color: #999999; font-weight: bold; font-style: italic } /* Comment.Special */
+.highlight .gd { color: #000000; background-color: #ffdddd } /* Generic.Deleted */
+.highlight .gd .x { color: #000000; background-color: #ffaaaa } /* Generic.Deleted.Specific */
+.highlight .ge { font-style: italic } /* Generic.Emph */
+.highlight .gr { color: #aa0000 } /* Generic.Error */
+.highlight .gh { color: #999999 } /* Generic.Heading */
+.highlight .gi { color: #000000; background-color: #ddffdd } /* Generic.Inserted */
+.highlight .gi .x { color: #000000; background-color: #aaffaa } /* Generic.Inserted.Specific */
+.highlight .go { color: #888888 } /* Generic.Output */
+.highlight .gp { color: #555555 } /* Generic.Prompt */
+.highlight .gs { font-weight: bold } /* Generic.Strong */
+.highlight .gu { color: #800080; font-weight: bold; } /* Generic.Subheading */
+.highlight .gt { color: #aa0000 } /* Generic.Traceback */
+.highlight .kc { font-weight: bold } /* Keyword.Constant */
+.highlight .kd { font-weight: bold } /* Keyword.Declaration */
+.highlight .kn { font-weight: bold } /* Keyword.Namespace */
+.highlight .kp { font-weight: bold } /* Keyword.Pseudo */
+.highlight .kr { font-weight: bold } /* Keyword.Reserved */
+.highlight .kt { color: #445588; font-weight: bold } /* Keyword.Type */
+.highlight .m { color: #009999 } /* Literal.Number */
+.highlight .s { color: #d14 } /* Literal.String */
+.highlight .na { color: #008080 } /* Name.Attribute */
+.highlight .nb { color: #0086B3 } /* Name.Builtin */
+.highlight .nc { color: #445588; font-weight: bold } /* Name.Class */
+.highlight .no { color: #008080 } /* Name.Constant */
+.highlight .ni { color: #800080 } /* Name.Entity */
+.highlight .ne { color: #990000; font-weight: bold } /* Name.Exception */
+.highlight .nf { color: #990000; font-weight: bold } /* Name.Function */
+.highlight .nn { color: #555555 } /* Name.Namespace */
+.highlight .nt { color: #000080 } /* Name.Tag */
+.highlight .nv { color: #008080 } /* Name.Variable */
+.highlight .ow { font-weight: bold } /* Operator.Word */
+.highlight .w { color: #bbbbbb } /* Text.Whitespace */
+.highlight .mf { color: #009999 } /* Literal.Number.Float */
+.highlight .mh { color: #009999 } /* Literal.Number.Hex */
+.highlight .mi { color: #009999 } /* Literal.Number.Integer */
+.highlight .mo { color: #009999 } /* Literal.Number.Oct */
+.highlight .sb { color: #d14 } /* Literal.String.Backtick */
+.highlight .sc { color: #d14 } /* Literal.String.Char */
+.highlight .sd { color: #d14 } /* Literal.String.Doc */
+.highlight .s2 { color: #d14 } /* Literal.String.Double */
+.highlight .se { color: #d14 } /* Literal.String.Escape */
+.highlight .sh { color: #d14 } /* Literal.String.Heredoc */
+.highlight .si { color: #d14 } /* Literal.String.Interpol */
+.highlight .sx { color: #d14 } /* Literal.String.Other */
+.highlight .sr { color: #009926 } /* Literal.String.Regex */
+.highlight .s1 { color: #d14 } /* Literal.String.Single */
+.highlight .ss { color: #990073 } /* Literal.String.Symbol */
+.highlight .bp { color: #999999 } /* Name.Builtin.Pseudo */
+.highlight .vc { color: #008080 } /* Name.Variable.Class */
+.highlight .vg { color: #008080 } /* Name.Variable.Global */
+.highlight .vi { color: #008080 } /* Name.Variable.Instance */
+.highlight .il { color: #009999 } /* Literal.Number.Integer.Long */
+
+.type-csharp .highlight .k { color: #0000FF }
+.type-csharp .highlight .kt { color: #0000FF }
+.type-csharp .highlight .nf { color: #000000; font-weight: normal }
+.type-csharp .highlight .nc { color: #2B91AF }
+.type-csharp .highlight .nn { color: #000000 }
+.type-csharp .highlight .s { color: #A31515 }
+.type-csharp .highlight .sc { color: #A31515 }
+
+
+</style></head><body><header><div class="heading"><h1>from-scala</h1><h3>A Scala interop library for Clojure</h3><hr /><div class="info"><h5>Author: Tobias Kortkamp<b>&nbsp;&nbsp;<a href="mailto:tobias.kortkamp@gmail.com">(tobias.kortkamp@gmail.com)</a></b></h5><h5>Library: v0.2.1</h5><h5>Date: 12 March 2015</h5><h5>Website: <a href="https://github.com/t6/from-scala">https://github.com/t6/from-scala</a></h5><h5>Generated By: <a href="http://www.github.com/zcaudate/lein-midje-doc">MidjeDoc</a></h5></div><br /><hr /></div><h4><a href="#introduction">1 &nbsp; Introduction</a></h4><h5>&nbsp;&nbsp;<i><a href="#features">1.1 &nbsp; Features</a></i></h5><h5>&nbsp;&nbsp;<i><a href="#usage">1.2 &nbsp; Usage</a></i></h5><h5>&nbsp;&nbsp;<i><a href="#examples">1.3 &nbsp; Examples</a></i></h5><h5>&nbsp;&nbsp;&nbsp;&nbsp;<i><a href="#creating-an-empty-immutable-scala-list">1.3.1 &nbsp; Creating an empty immutable Scala list</a></i></h5><h5>&nbsp;&nbsp;&nbsp;&nbsp;<i><a href="#appending-a-new-element-to-an-empty-list">1.3.2 &nbsp; Appending a new element to an empty list</a></i></h5><h5>&nbsp;&nbsp;&nbsp;&nbsp;<i><a href="#creating-a-list-of-lists-of-integers">1.3.3 &nbsp; Creating a list of lists of integers</a></i></h5><h5>&nbsp;&nbsp;&nbsp;&nbsp;<i><a href="#creating-a-scala-function">1.3.4 &nbsp; Creating a Scala function</a></i></h5><h5>&nbsp;&nbsp;&nbsp;&nbsp;<i><a href="#calling-flatmap-on-a-scala-collection">1.3.5 &nbsp; Calling `flatMap` on a Scala collection</a></i></h5><h5>&nbsp;&nbsp;&nbsp;&nbsp;<i><a href="#concatenating-two-scala-collections">1.3.6 &nbsp; Concatenating two Scala collections</a></i></h5><h5>&nbsp;&nbsp;&nbsp;&nbsp;<i><a href="#using-default-arguments">1.3.7 &nbsp; Using default arguments</a></i></h5><h5>&nbsp;&nbsp;&nbsp;&nbsp;<i><a href="#looping-over-scala-collections">1.3.8 &nbsp; Looping over Scala collections</a></i></h5><h5>&nbsp;&nbsp;&nbsp;&nbsp;<i><a href="#partial-application-of-scala-functions">1.3.9 &nbsp; Partial application of Scala functions</a></i></h5><h5>&nbsp;&nbsp;&nbsp;&nbsp;<i><a href="#creating-a-scalaoption">1.3.10 &nbsp; Creating a `scala.Option`</a></i></h5><h5>&nbsp;&nbsp;<i><a href="#license">1.4 &nbsp; License</a></i></h5><h4><a href="#scala-interop">2 &nbsp; Scala interop</a></h4><h4><a href="#utility-functions">3 &nbsp; Utility functions</a></h4><h4><a href="#working-with-scala-tuples,-options-and-collections">4 &nbsp; Working with Scala tuples, options and collections</a></h4><h4><a href="#destructuring-support-for-scala-collections,-tuples-and-case-classes">5 &nbsp; Destructuring support for Scala collections, tuples and case classes.</a></h4><br /></header><section><div class="heading"><h1>from-scala</h1><h3>A Scala interop library for Clojure</h3><hr /><div class="info"><h5>Author: Tobias Kortkamp<b>&nbsp;&nbsp;<a href="mailto:tobias.kortkamp@gmail.com">(tobias.kortkamp@gmail.com)</a></b></h5><h5>Library: v0.2.1</h5><h5>Date: 12 March 2015</h5><h5>Website: <a href="https://github.com/t6/from-scala">https://github.com/t6/from-scala</a></h5><h5>Generated By: <a href="http://www.github.com/zcaudate/lein-midje-doc">MidjeDoc</a></h5></div><br /><hr /></div><div><a name="introduction"></a><h2><b>1 &nbsp;&nbsp; Introduction</b></h2></div><div><p><code>from-scala</code> provides some syntactic sugar on top of Clojure's Java interop support and some utility functions for directly interfacing with Scala libraries from Clojure.  It uses a series of heuristics to make calling Scala methods easier and less ugly.</p></div><div><a name="features"></a><h3>1.1 &nbsp;&nbsp; Features</h3></div><div><p><ul><li>Introduces a macro <code>$</code> for Scala interop, similar to the built-in  special form <code>.</code><ul><li>It tries to resolve the correct Scala classes or companion objects    without the need to use e.g. <code>List$/MODULE$</code> like with regular    Java interop</li><li>Automatic encoding and decoding of method/class/object names that are    invalid Java or Clojure identifiers (refer to the Scala class <code>::</code> as    <code>&quot;::&quot;</code> in Clojure instead of <code>$colon$colon</code>)</li><li>It provides support for variable and default arguments</li><li>This is done at runtime using normal Java reflection</li></ul></li><li><code>$/fn</code> provides Clojure-like syntax for creating Scala functions</li><li><code>$/tuple</code> creates Scala tuples</li><li><code>$/option</code> creates Scala options</li><li>Provides views that make it easy to access and work with Scala  collections, options, tuples and case classes (or any class that  implements <code>scala.Product</code>)</li><li>Using <code>$/view</code> Scala tuples and case classes can participate in  normal destructuring</li><li>Destructuring of Scala tuples, collections and case classes</li></ul></div><div><a name="usage"></a><h3>1.2 &nbsp;&nbsp; Usage</h3></div><div><p>To use <code>from-scala</code> in your project, include this in your <code>project.clj</code>:</p></div><div><div class="highlight"><pre><span class="p">{</span><span class="ss">:dependencies</span> <span class="p">[</span><span class="nv">...</span>
+                <span class="p">[</span><span class="nv">t6/from-scala</span> <span class="s">&quot;0.2.1&quot;</span><span class="p">]</span>
+                <span class="p">[</span><span class="nv">org.scala-lang/scala-library</span> <span class="s">&quot;2.11.6&quot;</span><span class="p">]</span>
+                <span class="nv">...</span><span class="p">]}</span>
+</pre></div>
+</div><div><p>You need to include a Scala library yourself.  <code>from-scala</code> works with Scala 2.10 and 2.11. Choose the version you need or just copy the example above.</p></div><div><a name="examples"></a><h3>1.3 &nbsp;&nbsp; Examples</h3></div><div><p>The features are best shown in a series of examples.  All examples assume that you required <code>from-scala</code> like this in your namespace declaration:</p></div><div><div class="highlight"><pre><span class="p">(</span><span class="kd">ns </span><span class="nv">your.ns</span>
+  <span class="p">(</span><span class="ss">:require</span> <span class="p">[</span><span class="nv">t6.from-scala.core</span> <span class="ss">:refer</span> <span class="p">[</span><span class="nv">$</span> <span class="nv">$$</span><span class="p">]</span> <span class="ss">:as</span> <span class="nv">$</span><span class="p">]))</span>
+</pre></div>
+</div><div><a name="creating-an-empty-immutable-scala-list"></a><h3><i>1.3.1 &nbsp;&nbsp; Creating an empty immutable Scala list</i></h3></div><div><h4>With <code>from-scala</code></h4></div><div><p>Import the List class, so that it is available in the current namespace. We do not need to import the companion object explicitly here!</p></div><div><div class="highlight"><pre><span class="p">(</span><span class="nb">import </span><span class="ss">&#39;scala.collection.immutable.List</span><span class="p">)</span>
+</pre></div>
+</div><div><p>Call the companion object's empty method</p></div><div><div class="highlight"><pre><span class="p">(</span><span class="nf">$</span> <span class="nv">List/empty</span><span class="p">)</span> <span class="c1">;; =&gt; #&lt;Nil$ List()&gt;</span>
+</pre></div>
+</div><div><h4>Without <code>from-scala</code></h4></div><div><p>Import the List class' companion object (denoted by appending $ to List)</p></div><div><div class="highlight"><pre><span class="p">(</span><span class="nb">import </span><span class="ss">&#39;scala.collection.immutable.List$</span><span class="p">)</span>
+</pre></div>
+</div><div><p>Call the method empty on the companion object</p></div><div><div class="highlight"><pre><span class="p">(</span><span class="nf">.empty</span> <span class="nv">List$/MODULE$</span><span class="p">)</span> <span class="c1">;; =&gt; #&lt;Nil$ List()&gt;</span>
+</pre></div>
+</div><div><a name="appending-a-new-element-to-an-empty-list"></a><h3><i>1.3.2 &nbsp;&nbsp; Appending a new element to an empty list</i></h3></div><div><p>Create an empty list</p></div><div><div class="highlight"><pre><span class="p">(</span><span class="k">def </span><span class="nv">l</span> <span class="p">(</span><span class="nf">$</span> <span class="nv">List/empty</span><span class="p">))</span>
+</pre></div>
+</div><div><h4>With <code>from-scala</code></h4></div><div><p>Cons a 1 to it</p></div><div><div class="highlight"><pre><span class="p">(</span><span class="nf">$</span> <span class="nv">l</span> <span class="s">&quot;::&quot;</span> <span class="mi">1</span><span class="p">)</span> <span class="c1">;; =&gt; #&lt;$colon$colon List(1)&gt;</span>
+</pre></div>
+</div><div><p>Here we called the method <code>::</code> on the List instance, which is actually called <code>$colon$colon</code> in Java. We have to use a string here because Clojure's reader can't read in the symbol <code>::</code>. The <code>$</code> macro translates method names to the appropriate Java identifier. Method names can be given as symbols or (constant) strings. You can still use the symbol <code>$colon$colon</code> if you prefer.</p></div><div><h4>Without <code>from-scala</code></h4></div><div><div class="highlight"><pre><span class="p">(</span><span class="nf">.$colon$colon</span> <span class="nv">l</span> <span class="mi">1</span><span class="p">)</span>
+</pre></div>
+</div><div><p>or using Clojure's <code>.</code> form</p></div><div><div class="highlight"><pre><span class="p">(</span><span class="k">. </span><span class="nv">l</span> <span class="nv">$colon$colon</span> <span class="mi">1</span><span class="p">)</span>
+</pre></div>
+</div><div><p>Consing more than one element can be done with the help of the <code>$$</code> macro:</p></div><div><div class="highlight"><pre><span class="p">(</span><span class="nf">$$</span> <span class="nv">l</span> <span class="p">(</span><span class="s">&quot;::&quot;</span> <span class="mi">1</span><span class="p">)</span> <span class="p">(</span><span class="s">&quot;::&quot;</span> <span class="mi">2</span><span class="p">))</span>
+</pre></div>
+</div><div><p>which expands to:</p></div><div><div class="highlight"><pre><span class="p">(</span><span class="nb">-&gt; </span><span class="nv">l</span> <span class="p">(</span><span class="nf">$</span> <span class="s">&quot;::&quot;</span> <span class="mi">1</span><span class="p">)</span> <span class="p">(</span><span class="nf">$</span> <span class="s">&quot;::&quot;</span> <span class="mi">2</span><span class="p">))</span>
+</pre></div>
+</div><div><p>Instead of all of the above you could also use <code>$/immutable-list</code> to create the same list:</p></div><div><div class="highlight"><pre><span class="p">(</span><span class="nf">$/immutable-list</span> <span class="mi">1</span> <span class="mi">2</span><span class="p">)</span>
+</pre></div>
+</div><div><a name="creating-a-list-of-lists-of-integers"></a><h3><i>1.3.3 &nbsp;&nbsp; Creating a list of lists of integers</i></h3></div><div><p>First let us create a list of lists of integers:</p></div><div><div class="highlight"><pre><span class="p">(</span><span class="k">def </span><span class="nv">l</span> <span class="p">(</span><span class="nf">$</span> <span class="nv">List</span> <span class="o">&amp;</span> <span class="p">(</span><span class="nf">$</span> <span class="nv">List</span> <span class="o">&amp;</span> <span class="mi">1</span> <span class="mi">2</span> <span class="mi">3</span><span class="p">)</span> <span class="p">(</span><span class="nf">$</span> <span class="nv">List</span> <span class="o">&amp;</span> <span class="mi">4</span> <span class="mi">5</span> <span class="mi">6</span><span class="p">)))</span>
+</pre></div>
+</div><div><p><code>&#40;$ List ...&#41;</code> calls the apply method on the <code>List</code> companion object. <code>List</code>'s apply method takes variable arguments.</p></div><div><p>Variable arguments are represented as <code>Seq</code>s in Scala. The <code>$</code> macro provides syntax that automatically creates a <code>Seq</code> for you when you need to call such a function. Everything after a <code>&amp;</code> is added to the <code>Seq</code>. Variable arguments can only appear at the end of a function's signature.</p></div><div><p>We are going to pass on showing how this can be done with regular Clojure interop. It is way too ugly!</p><p>If you are curious anyway try macro expanding the call above.</p></div><div><p>You can also do this explicitly by calling <code>$/var-args</code>:</p></div><div><div class="highlight"><pre><span class="p">(</span><span class="nf">$</span> <span class="nv">List</span> <span class="p">(</span><span class="nf">$/var-args</span> <span class="mi">1</span> <span class="mi">2</span> <span class="mi">3</span><span class="p">))</span>
+</pre></div>
+</div><div><a name="creating-a-scala-function"></a><h3><i>1.3.4 &nbsp;&nbsp; Creating a Scala function</i></h3></div><div><p>Some Scala methods expect functions. <code>from-scala</code> provides a macro that reifies a Scala function object with the appropriate arity for you:</p></div><div><div class="highlight"><pre><span class="p">(</span><span class="nf">$/fn</span> <span class="p">[</span><span class="nv">x</span><span class="p">]</span> <span class="p">(</span><span class="nb">inc </span><span class="nv">x</span><span class="p">))</span>
+</pre></div>
+</div><div><p>It reifies the appropriate <code>scala.Function&lt;n&gt;</code> trait. In the example we created a <code>scala.Function1</code> object that increments its argument.</p></div><div><p>Once again macro expansion will show all the ugliness behind this.</p></div><div><a name="calling-flatmap-on-a-scala-collection"></a><h3><i>1.3.5 &nbsp;&nbsp; Calling `flatMap` on a Scala collection</i></h3></div><div><p>We will reuse the list of lists of integers we created in the previous examples.</p></div><div><p>Call <code>flatMap</code> on the list, incrementing every number</p></div><div><div class="highlight"><pre><span class="p">(</span><span class="nf">$</span> <span class="nv">l</span> <span class="nv">flatMap</span>
+   <span class="p">(</span><span class="nf">$/fn</span> <span class="p">[</span><span class="nv">xs</span><span class="p">]</span>
+     <span class="p">(</span><span class="nf">$</span> <span class="nv">xs</span> <span class="nb">map </span><span class="p">(</span><span class="nf">$/fn</span> <span class="p">[</span><span class="nv">x</span><span class="p">]</span> <span class="p">(</span><span class="nb">inc </span><span class="nv">x</span><span class="p">))</span>
+        <span class="p">(</span><span class="nf">$</span> <span class="nv">List/canBuildFrom</span><span class="p">)))</span>
+   <span class="p">(</span><span class="nf">$</span> <span class="nv">List/canBuildFrom</span><span class="p">))</span><span class="c1">;; =&gt; List(2, 3, 4, 5, 6, 7)</span>
+</pre></div>
+</div><div><p><code>flatMap</code> takes an implicit parameter.  It expects a <code>CanBuildFrom</code> instance.  You can create one for all Scala collection using <code>&#40;$ &lt;collection-type&gt;/canBuildfrom&#41;</code>.  <code>from-scala</code> does not resolve implicits and you need to provide them yourself.  In the Scala documentation you might have to look at <em>Full Signature</em> to see if a method takes an implicit parameter.</p></div><div><a name="concatenating-two-scala-collections"></a><h3><i>1.3.6 &nbsp;&nbsp; Concatenating two Scala collections</i></h3></div><div><div class="highlight"><pre><span class="p">(</span><span class="nb">import </span><span class="ss">&#39;scala.collection.immutable.Set</span><span class="p">)</span>
+
+<span class="p">(</span><span class="k">def </span><span class="nv">s</span> <span class="p">(</span><span class="nf">$</span> <span class="nv">Set</span> <span class="o">&amp;</span> <span class="mi">1</span> <span class="mi">2</span> <span class="mi">3</span> <span class="mi">4</span><span class="p">))</span>
+
+<span class="p">(</span><span class="k">def </span><span class="nv">l</span> <span class="p">(</span><span class="nf">$</span> <span class="nv">List</span> <span class="o">&amp;</span> <span class="mi">1</span> <span class="mi">5</span> <span class="mi">2</span><span class="p">))</span>
+
+<span class="p">(</span><span class="k">def </span><span class="nv">bf</span> <span class="p">(</span><span class="nf">$</span> <span class="nv">Set/canBuildFrom</span><span class="p">))</span>
+
+<span class="p">(</span><span class="nf">$</span> <span class="nv">s</span> <span class="nv">++</span> <span class="nv">l</span> <span class="nv">bf</span><span class="p">)</span> <span class="c1">;; =&gt; Set(1, 2, 3, 4, 5)</span>
+</pre></div>
+</div><div><p>The <code>CanBuildFrom</code> instance determines what collection type you get back.</p></div><div><a name="using-default-arguments"></a><h3><i>1.3.7 &nbsp;&nbsp; Using default arguments</i></h3></div><div><p>There is no way to resolve the names of the arguments to a method at runtime.  However we can determine which argument has a specified default argument.  To signal that we want to use an argument's default value we substitute it with an <code>&#95;</code>.</p></div><div><p>Assume the following Scala object is defined:<pre class="brush: scala">
+object MyObject {
+  def apply&#40;i: Int = 2, j: Int&#41;: Int = i + j
+} 
+</pre></p></div><div><h4>With <code>from-scala</code></h4></div><div><p>We can use the default value 2 for the first argument <code>i</code> with an <code>&#95;</code>:</p></div><div><div class="highlight"><pre><span class="p">(</span><span class="nb">import </span><span class="ss">&#39;MyObject</span><span class="p">)</span>
+<span class="p">(</span><span class="nf">$</span> <span class="nv">MyObject</span> <span class="nv">_</span> <span class="mi">5</span><span class="p">)</span> <span class="c1">;; =&gt; 7</span>
+<span class="p">(</span><span class="nf">$</span> <span class="nv">MyObject</span> <span class="mi">3</span> <span class="mi">5</span><span class="p">)</span> <span class="c1">;; =&gt; 8</span>
+</pre></div>
+</div><div><h4>Without <code>from-scala</code></h4></div><div><div class="highlight"><pre><span class="p">(</span><span class="nb">import </span><span class="ss">&#39;MyObject$</span><span class="p">)</span>
+<span class="p">(</span><span class="nf">.apply</span> <span class="nv">MyObject$/MODULE$</span> <span class="p">(</span><span class="nf">.apply$default$1</span> <span class="nv">MyObject$/MODULE$</span><span class="p">)</span> <span class="mi">5</span><span class="p">)</span> <span class="c1">;; =&gt; 7</span>
+<span class="p">(</span><span class="nf">.apply</span> <span class="nv">MyObject$/MODULE$</span> <span class="mi">3</span> <span class="mi">5</span><span class="p">)</span> <span class="c1">;; =&gt; 8</span>
+</pre></div>
+</div><div><a name="looping-over-scala-collections"></a><h3><i>1.3.8 &nbsp;&nbsp; Looping over Scala collections</i></h3></div><div><p><code>from-scala</code> implements <code>cats</code>' <code>Monad</code>, <code>MonadZero</code>, <code>MonadPlus</code>, <code>Applicative</code>, and <code>Functor</code> protocols for Scala iterables (i.e. all Scala collections).</p></div><div><p>This gets us for-like behavior using <code>mlet</code> for free.  <code>from-scala</code> provides a wrapper for <code>mlet</code> called <code>$/for</code> which wraps the body in an implicit <code>return</code>.  This makes <code>$/for</code> look like <code>clojure.core/for</code>. It is however eager and not lazy.</p></div><div><p>We also implement all of <code>cats</code> protocols for Scala's <code>Option</code> type. So that you can use options with <code>$/for</code> just like you would in Scala with <code>for</code>.</p></div><div><div class="highlight"><pre><span class="p">(</span><span class="nf">$/for</span> <span class="p">[</span><span class="nv">x</span> <span class="p">(</span><span class="nf">$</span> <span class="nv">List</span> <span class="o">&amp;</span> <span class="mi">1</span> <span class="mi">2</span> <span class="mi">3</span><span class="p">)</span>
+        <span class="nv">y</span> <span class="p">(</span><span class="nf">$/immutable-list</span> <span class="mi">4</span> <span class="mi">5</span> <span class="mi">6</span><span class="p">)]</span>
+   <span class="p">(</span><span class="nf">$/tuple</span> <span class="nv">x</span> <span class="nv">y</span><span class="p">))</span><span class="c1">;; =&gt; List((1,4), (1,5), (1,6), (2,4), (2,5), (2,6), (3,4), (3,5), (3,6))</span>
+</pre></div>
+</div><div><p>Note that <code>$/for</code> does not return a lazy sequence like Clojure's <code>for</code>.  It always returns the same container type as the first binding.</p></div><div><p><code>$/tuple</code> returns a <code>scala.TupleN</code> instance, where <code>N</code> is the number of elements in the tuple with <code>1 &lt;= N &lt;= 22</code>.</p></div><div><a name="partial-application-of-scala-functions"></a><h3><i>1.3.9 &nbsp;&nbsp; Partial application of Scala functions</i></h3></div><div><p>Use <code>$/partial</code> if you need to partially apply arguments to a Scala function.</p></div><div><div class="highlight"><pre><span class="p">(</span><span class="k">def </span><span class="nv">plus</span> <span class="p">(</span><span class="nf">$/fn</span> <span class="p">[</span><span class="nv">a</span> <span class="nv">b</span><span class="p">]</span> <span class="p">(</span><span class="nb">+ </span><span class="nv">a</span> <span class="nv">b</span><span class="p">)))</span>
+
+<span class="p">(</span><span class="nf">$</span> <span class="nv">plus</span> <span class="nb">apply </span><span class="mi">4</span> <span class="mi">5</span><span class="p">)</span> <span class="c1">;; =&gt; 9</span>
+
+<span class="p">(</span><span class="k">def </span><span class="nv">plus5</span> <span class="p">(</span><span class="nf">$/partial</span> <span class="nv">plus</span> <span class="mi">5</span><span class="p">))</span>
+
+<span class="p">(</span><span class="nf">$</span> <span class="nv">plus5</span> <span class="nb">apply </span><span class="mi">3</span><span class="p">)</span> <span class="c1">;; =&gt; 8</span>
+</pre></div>
+</div><div><a name="creating-a-scalaoption"></a><h3><i>1.3.10 &nbsp;&nbsp; Creating a `scala.Option`</i></h3></div><div><div class="highlight"><pre><span class="p">(</span><span class="nb">import </span><span class="ss">&#39;scala.Option</span><span class="p">)</span>
+
+<span class="p">(</span><span class="nf">$</span> <span class="nv">Option</span> <span class="ss">:value</span><span class="p">)</span> <span class="c1">;; =&gt; Some(:value)</span>
+
+<span class="p">(</span><span class="nf">$</span> <span class="nv">Option</span> <span class="nv">nil</span><span class="p">)</span> <span class="c1">;; =&gt; None</span>
+</pre></div>
+</div><div><p>Prefer using <code>Option</code> rather than using <code>Some</code> directly. It looks nicer and works well with Clojure's <code>nil</code>-returning-functions. Alternatively there is wrapper called <code>$/option</code>.</p></div><div><p>Unpack the <code>Option</code> with <code>$/view</code>. You can then use <code>if-let</code> or <code>when-let</code> like you normally would in Clojure:</p></div><div><div class="highlight"><pre><span class="p">(</span><span class="k">def </span><span class="nv">my-option</span> <span class="p">(</span><span class="nf">$/option</span> <span class="ss">:value</span><span class="p">))</span>
+
+<span class="p">(</span><span class="nb">if-let </span><span class="p">[</span><span class="nv">v</span> <span class="p">(</span><span class="nf">$/view</span> <span class="nv">my-option</span><span class="p">)]</span>
+  <span class="p">(</span><span class="nb">str </span><span class="s">&quot;option has Some(&quot;</span> <span class="nv">v</span> <span class="s">&quot;)&quot;</span><span class="p">)</span>
+  <span class="s">&quot;option was None$&quot;</span><span class="p">)</span><span class="c1">;; =&gt; &quot;option has Some(:value)&quot;</span>
+</pre></div>
+</div><div><p>Alternatively use the option's <code>getOrElse</code> method, however you need to wrap the default value for <code>getOrElse</code> in a Scala function.</p></div><div><div class="highlight"><pre><span class="p">(</span><span class="nf">$</span> <span class="nv">my-option</span> <span class="nv">getOrElse</span> <span class="p">(</span><span class="nf">$/fn</span> <span class="p">[]</span> <span class="ss">:default-value</span><span class="p">))</span> <span class="c1">;; =&gt; :value</span>
+</pre></div>
+</div><div><p>Or use <code>$/if-let</code> which implicitly calls <code>$/view</code> on the value:</p></div><div><div class="highlight"><pre><span class="p">(</span><span class="nf">$/if-let</span> <span class="p">[</span><span class="nv">v</span> <span class="nv">my-option</span><span class="p">]</span>
+  <span class="p">(</span><span class="nb">str </span><span class="s">&quot;option has Some(&quot;</span> <span class="nv">v</span> <span class="s">&quot;)&quot;</span><span class="p">)</span>
+  <span class="s">&quot;option was None$&quot;</span><span class="p">)</span><span class="c1">;; =&gt; &quot;option has Some(:value)&quot;</span>
+</pre></div>
+</div><div><p>This is safe even if the value is not a Scala option. Note that the above expression will print <code>&quot;option was None$&quot;</code> if the value is a <code>None$</code> or if it is <code>nil</code>. It makes no distinction between those two values. Keep this in mind when you use <code>$/if-let</code> and <code>$/view</code>.</p></div><div><a name="license"></a><h3>1.4 &nbsp;&nbsp; License</h3></div><div><p>Copyright (c) 2014-2015 Tobias Kortkamp</p><p>Distributed under the terms of the MIT License.</p></div><div><div class="highlight"><pre><span class="p">(</span><span class="nf">defchecker</span> <span class="nv">instance-of</span> <span class="p">[</span><span class="nv">expected-class</span><span class="p">]</span>
+  <span class="p">(</span><span class="nf">checker</span> <span class="p">[</span><span class="nv">object</span><span class="p">]</span> <span class="p">(</span><span class="nb">instance? </span><span class="nv">expected-class</span> <span class="nv">object</span><span class="p">)))</span>
+</pre></div>
+</div><div><a name="scala-interop"></a><h2><b>2 &nbsp;&nbsp; Scala interop</b></h2></div><div><a name="$"></a><h4><i>e.2.1  &nbsp;-&nbsp; $</i></h4><div class="highlight"><pre><span class="s">&quot;Scala interop macro. Method and class symbols can be strings if you</span>
+<span class="s">need to use Scala classes, objects or method names that cannot be</span>
+<span class="s">represented as a Clojure symbol.\n&quot;</span>
+<span class="c1">;; Calls companion object scala.Option$/MODULE$</span>
+<span class="p">(</span><span class="nf">.get</span> <span class="p">(</span><span class="nf">$</span> <span class="nv">scala.Option</span> <span class="ss">:a</span><span class="p">))</span> <span class="nv">=&gt;</span> <span class="ss">:a</span>
+<span class="c1">;; Calls List&#39;s companion object apply method with variable arguments</span>
+<span class="p">(</span><span class="nf">$</span> <span class="nv">List</span> <span class="o">&amp;</span> <span class="mi">1</span> <span class="mi">2</span> <span class="mi">3</span><span class="p">)</span> <span class="nv">=&gt;</span> <span class="p">(</span><span class="nf">instance-of</span> <span class="nv">List</span><span class="p">)</span>
+<span class="p">(</span><span class="nf">.length</span> <span class="p">(</span><span class="nf">$</span> <span class="nv">List</span> <span class="o">&amp;</span> <span class="mi">1</span> <span class="mi">2</span> <span class="mi">3</span><span class="p">))</span> <span class="nv">=&gt;</span> <span class="mi">3</span>
+<span class="c1">;; call method on companion object</span>
+<span class="p">(</span><span class="nf">$</span> <span class="nv">List/empty</span><span class="p">)</span> <span class="nv">=&gt;</span> <span class="p">(</span><span class="nf">instance-of</span> <span class="nv">List</span><span class="p">)</span>
+<span class="c1">;; alt. syntax for special method/class names (that are invalid Clojure symbols)</span>
+<span class="c1">;; TODO: better examples</span>
+<span class="p">(</span><span class="nf">$</span> <span class="p">[</span><span class="nv">List</span> <span class="nv">empty</span><span class="p">])</span> <span class="nv">=&gt;</span> <span class="p">(</span><span class="nf">instance-of</span> <span class="nv">List</span><span class="p">)</span>
+<span class="p">(</span><span class="nf">$</span> <span class="p">[</span><span class="nv">List</span> <span class="s">&quot;empty&quot;</span><span class="p">])</span> <span class="nv">=&gt;</span> <span class="p">(</span><span class="nf">instance-of</span> <span class="nv">List</span><span class="p">)</span>
+<span class="p">(</span><span class="nf">$</span> <span class="p">[</span><span class="s">&quot;List&quot;</span> <span class="s">&quot;empty&quot;</span><span class="p">])</span> <span class="nv">=&gt;</span> <span class="p">(</span><span class="nf">instance-of</span> <span class="nv">List</span><span class="p">)</span>
+<span class="c1">;; use $colon$colon for constructing a list</span>
+<span class="p">(</span><span class="nf">.length</span> <span class="p">(</span><span class="nf">$</span> <span class="p">(</span><span class="nf">$</span> <span class="nv">List/empty</span><span class="p">)</span> <span class="s">&quot;::&quot;</span> <span class="mi">1</span><span class="p">))</span> <span class="nv">=&gt;</span> <span class="mi">1</span>
+<span class="c1">;; construct a Scala class</span>
+<span class="p">(</span><span class="nf">.get</span> <span class="p">(</span><span class="nf">$</span> <span class="nv">scala.Some.</span> <span class="ss">:a</span><span class="p">))</span> <span class="nv">=&gt;</span> <span class="ss">:a</span>
+<span class="c1">;; use Scala&#39;s collection API</span>
+<span class="p">(</span><span class="nf">$</span> <span class="p">(</span><span class="nf">$</span> <span class="nv">List</span> <span class="o">&amp;</span> <span class="mi">1</span> <span class="mi">2</span> <span class="mi">3</span><span class="p">)</span>
+   <span class="nv">reduce</span>
+   <span class="p">(</span><span class="nf">$/fn</span> <span class="p">[</span><span class="nv">acc</span> <span class="nv">x</span><span class="p">]</span> <span class="p">(</span><span class="nb">+ </span><span class="nv">acc</span> <span class="nv">x</span><span class="p">)))</span> <span class="nv">=&gt;</span> <span class="mi">6</span>
+</pre></div>
+</div><div><a name="$$"></a><h4><i>e.2.2  &nbsp;-&nbsp; $$</i></h4><div class="highlight"><pre><span class="s">&quot;A threading version of `$`.\n&quot;</span>
+<span class="p">(</span><span class="nf">$$</span> <span class="nv">x</span><span class="p">)</span> <span class="nv">=expands-to=&gt;</span> <span class="p">(</span><span class="nf">clojure.core/-&gt;</span> <span class="nv">x</span><span class="p">)</span>
+<span class="p">(</span><span class="nf">$$</span> <span class="nv">x</span> <span class="nv">a</span> <span class="nv">b</span> <span class="nv">c</span><span class="p">)</span> <span class="nv">=expands-to=&gt;</span> <span class="p">(</span><span class="nf">clojure.core/-&gt;</span> <span class="nv">x</span>
+                                            <span class="p">(</span><span class="nf">t6.from-scala.internal/$</span> <span class="nv">a</span><span class="p">)</span>
+                                            <span class="p">(</span><span class="nf">t6.from-scala.internal/$</span> <span class="nv">b</span><span class="p">)</span>
+                                            <span class="p">(</span><span class="nf">t6.from-scala.internal/$</span> <span class="nv">c</span><span class="p">))</span>
+</pre></div>
+</div><div><a name="var-args"></a><h4><i>e.2.3  &nbsp;-&nbsp; var-args</i></h4><div class="highlight"><pre><span class="s">&quot;Returns a scala immutable seq with the given arguments. This is</span>
+<span class="s">used by `$` when calling Scala methods that expect variable</span>
+<span class="s">arguments.\n&quot;</span>
+<span class="p">(</span><span class="nf">$/var-args</span> <span class="mi">1</span> <span class="mi">2</span> <span class="mi">3</span><span class="p">)</span> <span class="nv">=&gt;</span> <span class="p">(</span><span class="nf">instance-of</span> <span class="nv">scala.collection.Seq</span><span class="p">)</span>
+<span class="p">(</span><span class="nf">.apply</span> <span class="p">(</span><span class="nf">$/var-args</span> <span class="mi">1</span> <span class="mi">2</span> <span class="mi">3</span><span class="p">)</span> <span class="mi">0</span><span class="p">)</span> <span class="nv">=&gt;</span> <span class="mi">1</span>
+<span class="p">(</span><span class="nf">.apply</span> <span class="p">(</span><span class="nf">$/var-args</span> <span class="mi">1</span> <span class="mi">2</span> <span class="mi">3</span><span class="p">)</span> <span class="mi">1</span><span class="p">)</span> <span class="nv">=&gt;</span> <span class="mi">2</span>
+<span class="p">(</span><span class="nf">.apply</span> <span class="p">(</span><span class="nf">$/var-args</span> <span class="mi">1</span> <span class="mi">2</span> <span class="mi">3</span><span class="p">)</span> <span class="mi">2</span><span class="p">)</span> <span class="nv">=&gt;</span> <span class="mi">3</span>
+<span class="p">(</span><span class="nf">.length</span> <span class="p">(</span><span class="nf">$/var-args</span><span class="p">))</span> <span class="nv">=&gt;</span> <span class="mi">0</span>
+</pre></div>
+</div><div><a name="fn"></a><h4><i>e.2.4  &nbsp;-&nbsp; fn</i></h4><div class="highlight"><pre><span class="s">&quot;Returns a new Scala function.\n&quot;</span>
+<span class="p">(</span><span class="nf">$/fn</span> <span class="p">[]</span> <span class="ss">:foo</span><span class="p">)</span> <span class="nv">=&gt;</span> <span class="p">(</span><span class="nf">instance-of</span> <span class="nv">scala.Function0</span><span class="p">)</span>
+<span class="p">(</span><span class="nf">$/fn</span> <span class="p">[</span><span class="nv">x</span><span class="p">]</span> <span class="p">(</span><span class="nb">inc </span><span class="nv">x</span><span class="p">))</span> <span class="nv">=&gt;</span> <span class="p">(</span><span class="nf">instance-of</span> <span class="nv">scala.Function1</span><span class="p">)</span>
+<span class="p">(</span><span class="nf">$/fn</span> <span class="p">[</span><span class="nv">a</span> <span class="nv">b</span> <span class="nv">c</span> <span class="nv">d</span> <span class="nv">e</span> <span class="nv">f</span> <span class="nv">g</span> <span class="nv">h</span> <span class="nv">i</span> <span class="nv">j</span> <span class="nv">k</span> <span class="nv">l</span> <span class="nv">m</span> <span class="nv">n</span> <span class="nv">o</span> <span class="nv">p</span> <span class="nv">q</span> <span class="nv">r</span> <span class="nv">s</span> <span class="nv">t</span><span class="p">])</span> <span class="nv">=&gt;</span> <span class="p">(</span><span class="nf">instance-of</span> <span class="nv">scala.Function20</span><span class="p">)</span>
+<span class="p">(</span><span class="nf">$/fn</span> <span class="p">[</span><span class="nv">a</span> <span class="nv">b</span> <span class="nv">c</span> <span class="nv">d</span> <span class="nv">e</span> <span class="nv">f</span> <span class="nv">g</span> <span class="nv">h</span> <span class="nv">i</span> <span class="nv">j</span> <span class="nv">k</span> <span class="nv">l</span> <span class="nv">m</span> <span class="nv">n</span> <span class="nv">o</span> <span class="nv">p</span> <span class="nv">q</span> <span class="nv">r</span> <span class="nv">s</span> <span class="nv">t</span> <span class="nv">u</span><span class="p">])</span> <span class="nv">=&gt;</span> <span class="p">(</span><span class="nf">instance-of</span> <span class="nv">scala.Function21</span><span class="p">)</span>
+<span class="p">(</span><span class="nf">$/fn</span> <span class="p">[</span><span class="nv">a</span> <span class="nv">b</span> <span class="nv">c</span> <span class="nv">d</span> <span class="nv">e</span> <span class="nv">f</span> <span class="nv">g</span> <span class="nv">h</span> <span class="nv">i</span> <span class="nv">j</span> <span class="nv">k</span> <span class="nv">l</span> <span class="nv">m</span> <span class="nv">n</span> <span class="nv">o</span> <span class="nv">p</span> <span class="nv">q</span> <span class="nv">r</span> <span class="nv">s</span> <span class="nv">t</span> <span class="nv">u</span> <span class="nv">v</span><span class="p">])</span> <span class="nv">=&gt;</span> <span class="p">(</span><span class="nf">instance-of</span> <span class="nv">scala.Function22</span><span class="p">)</span>
+<span class="p">(</span><span class="nb">eval </span><span class="o">&#39;</span><span class="p">(</span><span class="nf">$/fn</span> <span class="p">[</span><span class="nv">a</span> <span class="nv">b</span> <span class="nv">c</span> <span class="nv">d</span> <span class="nv">e</span> <span class="nv">f</span> <span class="nv">g</span> <span class="nv">h</span> <span class="nv">i</span> <span class="nv">j</span> <span class="nv">k</span> <span class="nv">l</span> <span class="nv">m</span> <span class="nv">n</span> <span class="nv">o</span> <span class="nv">p</span> <span class="nv">q</span> <span class="nv">r</span> <span class="nv">s</span> <span class="nv">t</span> <span class="nv">u</span> <span class="nv">v</span> <span class="nv">w</span><span class="p">]))</span> <span class="nv">=&gt;</span> <span class="p">(</span><span class="nf">throws</span> <span class="nv">ClassNotFoundException</span> <span class="s">&quot;scala.Function23&quot;</span><span class="p">)</span>
+<span class="p">(</span><span class="nf">.apply</span> <span class="p">(</span><span class="nf">$/fn</span> <span class="p">[</span><span class="nv">x</span><span class="p">]</span> <span class="p">(</span><span class="nb">inc </span><span class="nv">x</span><span class="p">))</span> <span class="mi">1</span><span class="p">)</span> <span class="nv">=&gt;</span> <span class="mi">2</span>
+</pre></div>
+</div><div><a name="decode-scala-symbol"></a><h4><i>e.2.5  &nbsp;-&nbsp; decode-scala-symbol</i></h4><div class="highlight"><pre><span class="s">&quot;Transforms a Java identifier to a Scala identifier. Accepts</span>
+<span class="s">strings, symbols or keywords. Returns a string.\n&quot;</span>
+ <span class="p">(</span><span class="nf">$/decode-scala-symbol</span> <span class="s">&quot;foo.$plus$plus.bar.$colon$colon&quot;</span><span class="p">)</span> <span class="nv">=&gt;</span> <span class="s">&quot;foo.++.bar.::&quot;</span>
+ <span class="p">(</span><span class="nf">$/decode-scala-symbol</span> <span class="s">&quot;$plus$plus&quot;</span><span class="p">)</span> <span class="nv">=&gt;</span> <span class="s">&quot;++&quot;</span>
+ <span class="p">(</span><span class="nf">$/decode-scala-symbol</span> <span class="ss">&#39;$lessinit$greater</span><span class="p">)</span> <span class="nv">=&gt;</span> <span class="s">&quot;&lt;init&gt;&quot;</span>
+</pre></div>
+</div><div><a name="encode-scala-symbol"></a><h4><i>e.2.6  &nbsp;-&nbsp; encode-scala-symbol</i></h4><div class="highlight"><pre><span class="s">&quot;Transforms a Scala identifier (e.g. method or class names) to a</span>
+<span class="s">Java identifier. Accepts strings, symbols or keywords.  Returns a</span>
+<span class="s">Clojure symbol.\n&quot;</span>
+ <span class="p">(</span><span class="nf">$/encode-scala-symbol</span> <span class="s">&quot;foo.++.bar.::&quot;</span><span class="p">)</span> <span class="nv">=&gt;</span> <span class="ss">&#39;foo.$plus$plus.bar.$colon$colon</span>
+ <span class="p">(</span><span class="nf">$/encode-scala-symbol</span> <span class="s">&quot;++&quot;</span><span class="p">)</span> <span class="nv">=&gt;</span> <span class="ss">&#39;$plus$plus</span>
+ <span class="p">(</span><span class="nf">$/encode-scala-symbol</span> <span class="ss">&#39;&lt;init&gt;</span><span class="p">)</span> <span class="nv">=&gt;</span> <span class="ss">&#39;$lessinit$greater</span>
+ <span class="c1">;; trailing dots are removed</span>
+ <span class="p">(</span><span class="nf">$/encode-scala-symbol</span> <span class="s">&quot;::.&quot;</span><span class="p">)</span> <span class="nv">=&gt;</span> <span class="ss">&#39;$colon$colon</span>
+</pre></div>
+</div><div><div class="highlight"><pre><span class="p">(</span><span class="nf">defchecker</span> <span class="nv">instance-of</span> <span class="p">[</span><span class="nv">expected-class</span><span class="p">]</span>
+  <span class="p">(</span><span class="nf">checker</span> <span class="p">[</span><span class="nv">object</span><span class="p">]</span> <span class="p">(</span><span class="nb">instance? </span><span class="nv">expected-class</span> <span class="nv">object</span><span class="p">)))</span>
+</pre></div>
+</div><div><a name="utility-functions"></a><h2><b>3 &nbsp;&nbsp; Utility functions</b></h2></div><div><a name="partial"></a><h4><i>e.3.1  &nbsp;-&nbsp; partial</i></h4><div class="highlight"><pre><span class="s">&quot;Like `clojure.core/partial` but for Scala functions.\n&quot;</span>
+ <span class="p">(</span><span class="k">def </span><span class="nv">plus</span> <span class="p">(</span><span class="nf">$/fn</span> <span class="p">[</span><span class="nv">a</span> <span class="nv">b</span><span class="p">]</span> <span class="p">(</span><span class="nb">+ </span><span class="nv">a</span> <span class="nv">b</span><span class="p">)))</span>
+ <span class="p">(</span><span class="nf">$</span> <span class="nv">plus</span> <span class="nb">apply </span><span class="mi">4</span> <span class="mi">5</span><span class="p">)</span> <span class="nv">=&gt;</span> <span class="mi">9</span>
+
+ <span class="p">(</span><span class="k">def </span><span class="nv">plus5</span> <span class="p">(</span><span class="nf">$/partial</span> <span class="nv">plus</span> <span class="mi">5</span><span class="p">))</span>
+ <span class="p">(</span><span class="nf">$</span> <span class="nv">plus5</span> <span class="nb">apply </span><span class="mi">3</span><span class="p">)</span> <span class="nv">=&gt;</span> <span class="mi">8</span>
+</pre></div>
+</div><div><a name="working-with-scala-tuples,-options-and-collections"></a><h2><b>4 &nbsp;&nbsp; Working with Scala tuples, options and collections</b></h2></div><div><a name="tuple"></a><h4><i>e.4.1  &nbsp;-&nbsp; tuple</i></h4><div class="highlight"><pre><span class="s">&quot;Returns a Scala tuple. Uses the Scala tuple class that matches the</span>
+<span class="s">number of arguments.\n&quot;</span>
+<span class="p">(</span><span class="nf">$/tuple</span> <span class="mi">1</span> <span class="mi">2</span><span class="p">)</span> <span class="nv">=&gt;</span> <span class="p">(</span><span class="nf">instance-of</span> <span class="nv">scala.Tuple2</span><span class="p">)</span>
+<span class="p">(</span><span class="nb">apply </span><span class="nv">$/tuple</span> <span class="p">(</span><span class="nb">range </span><span class="mi">20</span><span class="p">))</span> <span class="nv">=&gt;</span> <span class="p">(</span><span class="nf">instance-of</span> <span class="nv">scala.Tuple20</span><span class="p">)</span>
+<span class="p">(</span><span class="nb">apply </span><span class="nv">$/tuple</span> <span class="p">(</span><span class="nb">range </span><span class="mi">21</span><span class="p">))</span> <span class="nv">=&gt;</span> <span class="p">(</span><span class="nf">instance-of</span> <span class="nv">scala.Tuple21</span><span class="p">)</span>
+<span class="p">(</span><span class="nb">apply </span><span class="nv">$/tuple</span> <span class="p">(</span><span class="nb">range </span><span class="mi">22</span><span class="p">))</span> <span class="nv">=&gt;</span> <span class="p">(</span><span class="nf">instance-of</span> <span class="nv">scala.Tuple22</span><span class="p">)</span>
+<span class="p">(</span><span class="nb">apply </span><span class="nv">$/tuple</span> <span class="p">(</span><span class="nb">range </span><span class="mi">23</span><span class="p">))</span> <span class="nv">=&gt;</span> <span class="p">(</span><span class="nf">throws</span> <span class="nv">ExceptionInfo</span><span class="p">)</span>
+</pre></div>
+</div><div><a name="option"></a><h4><i>e.4.2  &nbsp;-&nbsp; option</i></h4><div class="highlight"><pre><span class="s">&quot;Returns a Scala option.\n&quot;</span>
+<span class="p">(</span><span class="nf">$/option</span> <span class="nv">nil</span><span class="p">)</span> <span class="nv">=&gt;</span> <span class="p">(</span><span class="nf">instance-of</span> <span class="nv">scala.None$</span><span class="p">)</span>
+<span class="p">(</span><span class="nf">$/option</span> <span class="ss">:a</span><span class="p">)</span> <span class="nv">=&gt;</span> <span class="p">(</span><span class="nf">instance-of</span> <span class="nv">scala.Some</span><span class="p">)</span>
+</pre></div>
+</div><div><a name="for"></a><h4><i>e.4.3  &nbsp;-&nbsp; for</i></h4><div class="highlight"><pre><span class="s">&quot;List comprehension for Scala collections. Syntax follows</span>
+<span class="s">`clojure.core/for`, however `for` is not lazy. Returns a collection</span>
+<span class="s">with the same type as the type of the first collection you iterate</span>
+<span class="s">over.</span>
+
+<span class="s">This is syntactic sugar for `cats.core/mlet`.\n&quot;</span>
+<span class="p">(</span><span class="nf">$/for</span> <span class="p">[</span><span class="nv">x</span> <span class="p">(</span><span class="nf">$</span> <span class="nv">Set</span> <span class="o">&amp;</span> <span class="mi">1</span> <span class="mi">2</span> <span class="mi">3</span><span class="p">)</span> <span class="ss">:when</span> <span class="p">(</span><span class="nf">even?</span> <span class="nv">x</span><span class="p">)]</span> <span class="nv">x</span><span class="p">)</span> <span class="nv">=&gt;</span> <span class="p">(</span><span class="nf">$</span> <span class="nv">Set</span> <span class="o">&amp;</span> <span class="mi">2</span><span class="p">)</span>
+<span class="p">(</span><span class="nf">$/for</span> <span class="p">[</span><span class="nv">x</span> <span class="p">(</span><span class="nf">$</span> <span class="nv">List</span> <span class="o">&amp;</span> <span class="mi">1</span><span class="p">)</span>, <span class="nv">y</span> <span class="p">(</span><span class="nf">$</span> <span class="nv">Set</span> <span class="o">&amp;</span> <span class="mi">2</span><span class="p">)]</span> <span class="p">[</span><span class="nv">x</span> <span class="nv">y</span><span class="p">])</span> <span class="nv">=&gt;</span> <span class="p">(</span><span class="nf">$</span> <span class="nv">List</span> <span class="o">&amp;</span> <span class="p">[</span><span class="mi">1</span> <span class="mi">2</span><span class="p">])</span>
+
+<span class="p">(</span><span class="nf">$/for</span> <span class="p">[</span><span class="nv">x</span> <span class="p">(</span><span class="nf">$/option</span> <span class="mi">1</span><span class="p">)]</span> <span class="nv">x</span><span class="p">)</span> <span class="nv">=&gt;</span> <span class="p">(</span><span class="nf">$/option</span> <span class="mi">1</span><span class="p">)</span>
+<span class="p">(</span><span class="nf">$/for</span> <span class="p">[</span><span class="nv">x</span> <span class="p">(</span><span class="nf">$/option</span> <span class="mi">1</span><span class="p">)</span> <span class="nv">y</span> <span class="p">(</span><span class="nf">$/option</span> <span class="mi">2</span><span class="p">)]</span> <span class="p">(</span><span class="nb">+ </span><span class="nv">x</span> <span class="nv">y</span><span class="p">))</span> <span class="nv">=&gt;</span> <span class="p">(</span><span class="nf">$/option</span> <span class="mi">3</span><span class="p">)</span>
+<span class="p">(</span><span class="nf">$/for</span> <span class="p">[</span><span class="nv">x</span> <span class="p">(</span><span class="nf">$/option</span> <span class="nv">nil</span><span class="p">)</span> <span class="nv">y</span> <span class="p">(</span><span class="nf">$/option</span> <span class="mi">2</span><span class="p">)]</span> <span class="p">(</span><span class="nb">+ </span><span class="nv">x</span> <span class="nv">y</span><span class="p">))</span> <span class="nv">=&gt;</span> <span class="p">(</span><span class="nf">$/option</span> <span class="nv">nil</span><span class="p">)</span>
+</pre></div>
+</div><div><a name="destructuring-support-for-scala-collections,-tuples-and-case-classes"></a><h2><b>5 &nbsp;&nbsp; Destructuring support for Scala collections, tuples and case classes.</b></h2></div><div><a name="view"></a><h4><i>e.5.1  &nbsp;-&nbsp; view</i></h4><div class="highlight"><pre><span class="s">&quot;Returns a map-like or indexed structure that wraps the given Scala</span>
+<span class="s">object. The object can then participate in destructuring.\n&quot;</span>
+<span class="c1">;; TODO: add tests for destructuring of case classes</span>
+<span class="p">(</span><span class="nf">$/view</span> <span class="p">(</span><span class="nf">$/option</span> <span class="nv">nil</span><span class="p">))</span> <span class="nv">=&gt;</span> <span class="nv">nil</span>
+<span class="p">(</span><span class="nf">$/view</span> <span class="p">(</span><span class="nf">$/option</span> <span class="ss">:a</span><span class="p">))</span> <span class="nv">=&gt;</span> <span class="ss">:a</span>
+<span class="p">(</span><span class="k">let </span><span class="p">[[</span><span class="nv">x</span> <span class="nv">y</span><span class="p">]</span> <span class="p">(</span><span class="nf">$/view</span> <span class="p">(</span><span class="nf">$/option</span> <span class="p">(</span><span class="nf">$/tuple</span> <span class="mi">1</span> <span class="mi">2</span><span class="p">)))]</span> <span class="p">[</span><span class="nv">x</span> <span class="nv">y</span><span class="p">])</span> <span class="nv">=&gt;</span> <span class="p">[</span><span class="mi">1</span> <span class="mi">2</span><span class="p">]</span>
+<span class="p">(</span><span class="k">let </span><span class="p">[{</span><span class="ss">:keys</span> <span class="p">[</span><span class="nv">_1</span> <span class="nv">_3</span><span class="p">]}</span> <span class="p">(</span><span class="nf">$/view</span> <span class="p">(</span><span class="nf">$/tuple</span> <span class="ss">:a</span> <span class="ss">:b</span> <span class="ss">:c</span><span class="p">))]</span>
+  <span class="p">[</span><span class="nv">_1</span> <span class="nv">_3</span><span class="p">])</span> <span class="nv">=&gt;</span> <span class="p">[</span><span class="ss">:a</span> <span class="ss">:c</span><span class="p">]</span>
+<span class="p">(</span><span class="k">let </span><span class="p">[[</span><span class="nv">x</span> <span class="nv">y</span><span class="p">]</span> <span class="p">(</span><span class="nf">$/view</span> <span class="p">(</span><span class="nf">$/tuple</span> <span class="mi">1</span> <span class="mi">2</span><span class="p">))]</span>
+  <span class="p">[</span><span class="nv">x</span> <span class="nv">y</span><span class="p">])</span> <span class="nv">=&gt;</span> <span class="p">[</span><span class="mi">1</span> <span class="mi">2</span><span class="p">]</span>
+</pre></div>
+</div><div><a name="if-let"></a><h4><i>e.5.2  &nbsp;-&nbsp; if-let</i></h4><div class="highlight"><pre><span class="s">&quot;Like `clojure.core/if-let` but with special handling of scala.Option.\n&quot;</span>
+ <span class="p">(</span><span class="nf">$/if-let</span> <span class="p">[</span><span class="nv">x</span> <span class="p">(</span><span class="nf">$/option</span> <span class="mi">1</span><span class="p">)]</span> <span class="p">(</span><span class="nb">inc </span><span class="nv">x</span><span class="p">)</span> <span class="ss">:no</span><span class="p">)</span> <span class="nv">=&gt;</span> <span class="mi">2</span>
+ <span class="p">(</span><span class="nf">$/if-let</span> <span class="p">[</span><span class="nv">x</span> <span class="p">(</span><span class="nf">$/option</span> <span class="nv">nil</span><span class="p">)]</span> <span class="p">(</span><span class="nb">inc </span><span class="nv">x</span><span class="p">)</span> <span class="ss">:no</span><span class="p">)</span> <span class="nv">=&gt;</span> <span class="ss">:no</span>
+</pre></div>
+</div><div><a name="execution-context"></a><h4><i>e.5.3  &nbsp;-&nbsp; execution-context</i></h4><div class="highlight"><pre><span class="s">&quot;Returns Scala&#39;s global execution context.\n&quot;</span>
+ <span class="p">(</span><span class="nf">$/execution-context</span><span class="p">)</span> <span class="nv">=&gt;</span> <span class="p">(</span><span class="nf">instance-of</span> <span class="nv">scala.concurrent.ExecutionContext</span><span class="p">)</span>
+</pre></div>
+</div></section></body><script type="text/javascript">var metas = document.getElementsByTagName('meta');
+var i;
+if (navigator.userAgent.match(/iPhone/i)) {
+  for (i=0; i<metas.length; i++) {
+    if (metas[i].name == "viewport") {
+      metas[i].content = "width=device-width, minimum-scale=1.0, maximum-scale=1.0";
+    }
+  }
+  document.addEventListener("gesturestart", gestureStart, false);
+}
+function gestureStart() {
+  for (i=0; i<metas.length; i++) {
+    if (metas[i].name == "viewport") {
+      metas[i].content = "width=device-width, minimum-scale=0.25, maximum-scale=1.6";
+    }
+  }
+}</script></html>
