@@ -2,8 +2,9 @@
   (:refer-clojure :exclude [if-let for partial])
   (:require [clojure.core :as c]
             [cats.core :refer (mlet)]
+            [cats.context :as ctx]
             [cats.protocols :as protocols]
-            [cats.monad.either :refer (left right from-either)]
+            [cats.monad.either :refer (left right)]
             [potemkin :refer (def-map-type)]
             [t6.from-scala.internal :refer ($ $$) :as internal])
   (:import (clojure.lang Reflector Indexed)
@@ -285,17 +286,22 @@
 
 (extend-type scala.collection.Iterable
   protocols/Context
-  (get-context [this] this)
-  (get-value [this] this)
+  (-get-level [_] ctx/+level-default+)
+  
+  protocols/Contextual
+  (-get-context [this] this)
+
+  protocols/Extract
+  (-extract [this] this)
 
   protocols/Functor
-  (fmap [this f v]
+  (-fmap [this f v]
     ($ v map
        (wrap-fn f)
        ($$ this companion canBuildFrom)))
 
   protocols/Applicative
-  (fapply [this self av]
+  (-fapply [this self av]
     ($ self flatMap
        (internal/fn [f]
          ($ av map
@@ -303,54 +309,59 @@
             ($$ this companion canBuildFrom)))
        ($$ this companion canBuildFrom)))
 
-  (pure [this v]
+  (-pure [this v]
     ($$ this companion (apply & v)))
 
   protocols/Monad
-  (mreturn [this v]
+  (-mreturn [this v]
     ($$ this companion (apply & v)))
 
-  (mbind [this self f]
+  (-mbind [this self f]
     ($ self flatMap (wrap-fn f)
        ($$ this companion canBuildFrom)))
 
   protocols/MonadZero
-  (mzero [this]
+  (-mzero [this]
     ($$ this companion empty))
 
   protocols/MonadPlus
-  (mplus [this mv mv']
+  (-mplus [this mv mv']
     ($ mv ++ mv' ($$ this companion canBuildFrom))))
 
 (extend-type scala.Option
   protocols/Context
-  (get-context [this] this)
-  (get-value [this] this)
+  (-get-level [_] ctx/+level-default+)
+
+  protocols/Contextual
+  (-get-context [this] this)
+
+  protocols/Extract
+  (-extract [this] this)
 
   protocols/Functor
-  (fmap [this f v]
+  (-fmap [this f v]
     ($ v map (wrap-fn f)))
 
   protocols/Applicative
-  (fapply [this self av]
+  (-fapply [this self av]
     ($ self flatMap (internal/fn [f] ($ av map (wrap-fn f)))))
 
-  (pure [this v]
+  (-pure [this v]
     (option v))
 
   protocols/Monad
-  (mreturn [this v]
+  (-mreturn [this v]
     (option v))
 
-  (mbind [this self f]
+  (-mbind [this self f]
     ($ self flatMap (wrap-fn f)))
 
   protocols/MonadZero
-  (mzero [this]
+  (-mzero [this]
     ($ scala.Option/empty))
 
   protocols/MonadPlus
-  (mplus [this mv mv']
+  (-mplus [this mv mv']
     (if-let [v (view mv)]
       (option v)
       mv')))

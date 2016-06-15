@@ -6,7 +6,7 @@
   :deploy-repositories [["releases" :clojars]
                         ["snapshots" :clojars]]
   :profiles {:scala2.10 {:dependencies [[org.scala-lang/scala-library "2.10.4"]]}
-             :dev {:dependencies [[org.clojure/clojure "1.6.0"]
+             :dev {:dependencies [[org.clojure/clojure "1.8.0"]
                                   [org.scala-lang/scala-library "2.11.6"]
                                   [midje "1.6.3"]]
                    :plugins [[lein-midje-doc "0.0.24"]
@@ -17,8 +17,8 @@
                            :sub-title "A Scala interop library for Clojure"
                            :author "Tobias Kortkamp"
                            :email  "tobias.kortkamp@gmail.com"}}}
-  :dependencies [[cats "0.3.2"
+  :dependencies [[funcool/cats "1.2.1"
                   :exclusions [com.keminglabs/cljx
                                org.clojure/clojurescript]]
-                 [potemkin "0.3.12"]]
+                 [potemkin "0.4.3"]]
   :aliases {"test-all" ["do" "midje," "with-profile" "+scala2.10" "midje"]})
