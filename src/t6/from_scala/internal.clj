@@ -4,7 +4,7 @@
             [clojure.string :as str]
             [cats.core :refer (mlet)]
             [cats.protocols :as protocols]
-            [cats.monad.either :refer (left right from-either)])
+            [cats.monad.either :refer (left right)])
   (:import (scala.reflect NameTransformer$)
            (clojure.lang Reflector)))
 
@@ -314,7 +314,7 @@
     (prn &env))
   (let [;; This will try each expression in order and return the first `left` value.
         ;; `failure` throws an exception otherwise, leave it in the last position
-         m (from-either
+         m (deref
              (mlet [m (right {:expr expr
                               :meta (meta expr)
                               :args args})
